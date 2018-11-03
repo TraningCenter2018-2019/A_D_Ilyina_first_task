@@ -1,5 +1,5 @@
-@startuml
-
+[plantuml, diagrams, png]
+....
 interface CommandDispatcher {
   +boolean isCommand(int commandNumber)
   +void executeCommand(int commandNumber)
@@ -34,5 +34,4 @@ Command ..|> DeleteCommand
 Command ..|> CreateCommand
 Command ..|> SaveCommand
 Command ..|> CheckCommand
-
-@enduml
+....

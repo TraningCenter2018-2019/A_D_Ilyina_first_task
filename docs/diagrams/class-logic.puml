@@ -1,5 +1,5 @@
-@startuml
-
+[plantuml, diagrams, png]
+....
 abstract class Square {
   #char symbol
   --
@@ -85,5 +85,4 @@ Generator <|.. CanadianGenerator
 Generator --> Crossword
 CanadianGenerator --> Clue
 CanadianGenerator --> Square
-
-@enduml
+....

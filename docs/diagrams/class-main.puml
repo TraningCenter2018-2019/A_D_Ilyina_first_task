@@ -1,5 +1,5 @@
-@startuml
-
+[plantuml, diagrams, png]
+....
 class Main {
  +{static} void main(String[] args)
 }
@@ -7,5 +7,4 @@ class Main {
 GameTerminal ()- Main
 Main -() CommandDispatcher
 Main --() Game
-
-@enduml
+....

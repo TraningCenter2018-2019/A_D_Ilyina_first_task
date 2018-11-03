@@ -1,5 +1,5 @@
-@startuml
-
+[plantuml, diagrams, png]
+....
 left to right direction
 
 :Пользователь: as User
@@ -28,5 +28,4 @@ rectangle Игра {
     (Удалить\nкроссворд) .left.> (Выбрать\nкроссворд) : <include>
     (Удалить\nкроссворд) ..> (Подтвердить\nудаление) : <include>
 }
-
-@enduml
+....

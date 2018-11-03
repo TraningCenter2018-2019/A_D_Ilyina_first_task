@@ -1,5 +1,5 @@
-@startuml
-
+[plantuml, diagrams, png]
+....
 [Main] .down.> Game
 [Main] .right.> Command
 [Main] .right.> CommandDispatcher
@@ -21,5 +21,4 @@
 
 [Logic] -up- Crossword
 [Logic] -up- Generator
-
-@enduml
+....
