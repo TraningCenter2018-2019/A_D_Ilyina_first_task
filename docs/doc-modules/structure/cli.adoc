@@ -1,0 +1,31 @@
+:numbered:
+=== CLI
+
+image::{diagrams}/class-cli.png[]
+
+[caption=""]
+.interface CommandDispatcher
+====
+boolean isCommand(int commandNumber):: Метод, проверяющий, известна ли диспетчеру команд команда с данным номером.
+void executeCommand(int commandNumber):: Метод, выполняющий команду по заданному номеру.
+void addCommand(Command command):: Метод, добавляющий новую команду в HashMap.
+====
+
+[caption=""]
+.abstract class Command
+====
+protected Game game:: Ссылка на объект игры.
+protected String name:: Текстовое название команды.
+public void execute():: Метод выполнения команды.
+public String getName():: Геттер поля name.
+====
+
+[caption=""]
+.class CrosswordCommandDispatcher
+====
+private HashMap<int, Command> commands:: Набор команд, известных диспетчеру команд.
+====
+
+Модуль CLI отвечает за командный интерфейс игры. Реализация интерфейса диспетчера команд (CommandDispatcher) хранит некоторый набор команд в виде пар число-команда. Таким образом, любую из этих команд можно вызвать, зная её номер.
+
+Конкретные реализации абстрактного класса Command отличаются только своими методами выполнения (execute()). В теле этой функции они обращаются к соответствующим методам объекта Game.

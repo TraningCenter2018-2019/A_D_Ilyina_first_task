@@ -1,0 +1,100 @@
+:numbered:
+=== Logic
+
+image::{diagrams}/class-logic.png[]
+
+[caption=""]
+.interface Generator
+====
+Grossword generate():: Основной метод генерации кроссворда.
+====
+
+[caption=""]
+.abstract class Crossword
+====
+protected Square[][] grid:: Матрица, содержащая ячейки кроссворда.
+protected int width:: Ширина кроссворда.
+protected int height:: Высота кроссворда.
+public void initializeGrid():: Метод инициализации матрицы, создаёт пустой кроссворд размера width x height.
+public bool checkAnswers():: Метод проверки ответов.
+public int getWidth():: Геттер поля width.
+public int getHeight():: Геттер поля height.
+public Square getSquare(int row, int column):: Метод, возвращающий ячейку в позиции (row, column).
+====
+
+[caption=""]
+.abstract class Square
+====
+protected char symbol:: Символ, находящийся в ячейке.
+public char getSymbol():: Геттер поля symbol.
+public void setSymbol(char symbol):: Сеттер поля symbol.
+====
+
+[caption=""]
+.class CanadianGenerator
+====
+private int[2] size:: Размер генерируемого кроссворда.
+private List<int[2]> constraints:: Ограничения на ячейки. Список хранит позиции ячеек, которые нельзя редактировать.
+private Map<String, String> wordClues:: Пары значений слово-подсказка.
+private bool canPutWord(Crossword crosswrd, String word):: Метод, проводящий простую проверку, можно ли вставить слово в кроссворд или нет.
+====
+
+[caption=""]
+.class CanadianCrossword
+====
+private List<Clue> clues:: Список подсказок и ответов к ним.
+public void addClue(Clue clue):: Метод, добавляющий подсказку к списку. Используется генератором.
+public void initializeGrid(List<int[2]> constraints):: Метод инициализации матрицы кроссворда с заданными ограничениями.
+public List<Clue> getClues():: Геттер поля clues.
+====
+
+[caption=""]
+.class ConstraintSquare
+====
+Ограниченная ячейка. Её нельзя редактировать.
+====
+
+[caption=""]
+.class LetterSquare
+====
+Символьная ячейка.
+====
+
+[caption=""]
+.class ClueSquare
+====
+private int clueNumber:: Номер подсказки, слово которой начинается в данной ячейке.
+public int getClueNumber:: Геттер поля clueNumber.
+====
+
+[caption=""]
+.class Clue
+====
+private int clueNumber:: Номер подсказки.
+private Direction direction:: Направление ответа.
+private String clue:: Текст подсказки.
+private String word:: Слово-ответ.
+public int getClueNumber():: Геттер поля clueNumber.
+public Direction getDirection():: Геттер поля direction.
+public String getClue():: Геттер поля clue.
+public void setClue(String clue):: Сеттер поля clue.
+public String getWord():: Геттер поля word.
+public void setWord(String answer):: Сеттер поля word.
+public int getWordLenght():: Метод, возвращающий длину ответа.
+====
+
+[caption=""]
+.enum Direction
+====
+Направление ответа.
+====
+
+Модуль Logic хранит логическую структуру кроссворда и алгоритмы для его генерации.
+
+Абстрактный класс Crossword может представить любое поле заданных размеров из символьных ячеек. От него наследуется класс CanadianCrossword, отвечающий уже за структуру именно канадского кроссворда.
+
+У канадского кроссворда есть ряд пронумерованных подсказок с направлениями, которые отображены в классе Clue. Там же находятся ответы.
+
+Ячейка кроссворда Square для канадского кроссворда имеет три возможных типа: ограниченная ячейка (ConstraintSquare), символьная ячейка (LetterSquare) и символьная ячейка с подсказкой (ClueSquare).
+
+За генерацию канадсого кроссворда отвечает класс CanadianGenerator, реализующий общий интерфейс Generator.

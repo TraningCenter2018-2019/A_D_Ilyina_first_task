@@ -1,0 +1,33 @@
+:numbered:
+=== Main
+
+image::{diagrams}/class-main.png[]
+
+[caption=""]
+.class Main
+====
+public void main(String[] args):: Точка входа в программу.
+====
+
+Модуль Main содержит только один класс с тем же названием. В классе Main находится функция main(...), являющаяся точкой входа в приложение.
+
+Как было сказано выше, этот модуль связывает Game, CommandDispatcher и GameTerminal. Примерно это можно продемонстрировать при помощи следующего отрывка кода:
+
+----
+public static void main(String[] args) {
+  ...
+  Game game = new CrosswordGame();
+  CommandDispatcher dispatcher = new CanadianCommandDispatcher(commands);
+  GameTerminal terminal = new CrosswordTerminal(game);
+
+  while (game.getState != State.QUITTING) {
+    terminal.drawUI();
+    String input = terminal.getNextInput();
+    if (dispatcher.isCommand(input)) {
+      dispatcher.executeCommand((int)input);
+    } else {
+      game.handleInput(input);
+    }
+  }
+}
+----
