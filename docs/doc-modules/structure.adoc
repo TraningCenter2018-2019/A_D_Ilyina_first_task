@@ -5,7 +5,7 @@
 
 Общая структура игры представлена на данной компонентной диаграмме:
 
-image::{diagrams}/component.png[]
+image::{diagrams}/component.png[Component Diagram]
 
 [horizontal]
 Main:: Основной модуль. Собирает компоненты программы воедино.
@@ -16,12 +16,12 @@ Logic:: Логический модуль. Содержит структуру �
 
 Рассмотрим подробнее каждую из этих частей.
 
-include::structure/main.adoc[]
+include::structure/main.adoc[Main]
 
-include::structure/gui.adoc[]
+include::structure/gui.adoc[GUI]
 
-include::structure/cli.adoc[]
+include::structure/cli.adoc[CLI]
 
-include::structure/game.adoc[]
+include::structure/game.adoc[Crossword Game]
 
-include::structure/logic.adoc[]
+include::structure/logic.adoc[Logic]

@@ -1,7 +1,7 @@
 :numbered:
 === Logic
 
-image::{diagrams}/class-logic.png[]
+image::{diagrams}/class-logic.puml[Logic Class Diagram]
 
 [caption=""]
 .interface Generator

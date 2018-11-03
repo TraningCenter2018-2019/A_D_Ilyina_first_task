@@ -1,0 +1,17 @@
+@startuml
+
+interface GameTerminal {
+  +void drawUI()
+  +void initialize()
+  +String getNextInput()
+}
+
+class CrosswordTerminal {
+  -Game game
+  --
+}
+
+CrosswordTerminal .up.|> GameTerminal
+CrosswordTerminal -() Game
+
+@enduml

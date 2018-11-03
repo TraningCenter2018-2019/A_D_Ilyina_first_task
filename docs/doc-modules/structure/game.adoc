@@ -1,7 +1,7 @@
 :numbered:
 === Crossword Game
 
-image::{diagrams}/class-game.png[]
+image::{diagrams}/class-game.puml[Game Class Diagram]
 
 [caption=""]
 .interface Game

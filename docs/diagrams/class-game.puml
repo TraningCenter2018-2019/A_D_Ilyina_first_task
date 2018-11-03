@@ -1,0 +1,46 @@
+@startuml
+
+interface Game {
+  +void play()
+  +void configure()
+  +void getHelp()
+  +void quit()
+  +void deleteCrossword()
+  +void createCrossword()
+  +void saveCrossword()
+  +void checkCrossword()
+  +void handleInput(String input)
+}
+
+Game <|.. CrosswordGame
+
+class CrosswordGame {
+  -State state
+  -Crossword crossword
+  --
+  -void pickCrossword(int number)
+  -void deleteCrossword(int number)
+  -void addSymbol(int[2] position, char symbol)
+  -void addWord(lnt[2][2] position, String word)
+  ..Properties..
+  +State getState()
+}
+
+Crossword ()- CrosswordGame
+CrosswordGame -() Generator
+
+enum State {
+  INITIAL,
+  CONFIGURING,
+  PICKING,
+  DELETING,
+  CREATING,
+  SAVING,
+  PLAYING,
+  CHECKING,
+  QUITTING
+}
+
+CrosswordGame o-- State
+
+@enduml

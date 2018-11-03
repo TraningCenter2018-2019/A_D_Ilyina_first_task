@@ -1,0 +1,25 @@
+@startuml
+
+[Main] .down.> Game
+[Main] .right.> Command
+[Main] .right.> CommandDispatcher
+[Main] .left.> GameTerminal
+
+[CLI] -up- CommandDispatcher
+[CLI] -right- Command
+
+[CLI] .left.> Game
+
+[GUI] -up- GameTerminal
+
+[GUI] .right.> Game
+
+[Crossword Game] -up- Game
+
+[Crossword Game] .down.> Crossword
+[Crossword Game] .down.> Generator
+
+[Logic] -up- Crossword
+[Logic] -up- Generator
+
+@enduml

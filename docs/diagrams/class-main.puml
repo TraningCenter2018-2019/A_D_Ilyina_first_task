@@ -1,0 +1,11 @@
+@startuml
+
+class Main {
+ +{static} void main(String[] args)
+}
+
+GameTerminal ()- Main
+Main -() CommandDispatcher
+Main --() Game
+
+@enduml

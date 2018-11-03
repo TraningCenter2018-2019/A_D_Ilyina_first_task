@@ -1,0 +1,32 @@
+@startuml
+
+left to right direction
+
+:Пользователь: as User
+:Игрок: as Player
+:Конфигуратор: as Configurator
+
+User <|-left- Player
+User <|-right- Configurator
+
+rectangle Игра {
+    User -down-> (Получить\nпомощь)
+    User -down-> (Выйти)
+
+    Player -down-> (Играть)
+    (Играть) .down.> (Выбрать\nкроссворд) : <include>
+    (Играть) .down.> (Решить\nкроссворд) : <include>
+    (Играть) .down.> (Проверить\nрешение) : <include>
+
+    Configurator -down-> (Конфигурировать)
+    (Конфигурировать) <.. (Удалить\nкроссворд) : <extend>
+    (Конфигурировать) <.down. (Создать\nкроссворд) : <extend>
+
+    (Создать\nкроссворд) ..> (Ввести входные\nданные) : <include>
+    (Создать\nкроссворд) <.. (Сохранить\nкроссворд) : <extend>
+
+    (Удалить\nкроссворд) .left.> (Выбрать\nкроссворд) : <include>
+    (Удалить\nкроссворд) ..> (Подтвердить\nудаление) : <include>
+}
+
+@enduml

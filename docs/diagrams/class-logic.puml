@@ -1,0 +1,89 @@
+@startuml
+
+abstract class Square {
+  #char symbol
+  --
+  ..Properties..
+  +char getSymbol()
+  +void setSymbol(char symbol)
+}
+class ConstraintSquare {
+}
+class ClueSquare {
+  -int clueNumber
+  ..Properties..
+  +int getClueNumber()
+}
+class LetterSquare {
+}
+
+Square <|-- ConstraintSquare
+Square <|-- LetterSquare
+LetterSquare <|-- ClueSquare
+
+class Clue {
+  -int clueNumber
+  -Direction direction
+  -String clue
+  -String word
+  --
+  ..Properties..
+  +int getClueNumber()
+  +Direction getDirection()
+  +String getClue()
+  +void setClue(String clue)
+  +String getWord()
+  +void setWord(String answer)
+  +int getWordLenght()
+}
+enum Direction {
+  ACROSS
+  DOWN
+}
+
+Clue o-- Direction
+
+abstract class Crossword {
+  #Square[][] grid
+  #int width
+  #int height
+  --
+  +void initializeGrid()
+  +bool checkAnswers()
+  ..Properties..
+  +int getWidth()
+  +int getHeight()
+  +Square getSquare(int row, int column)
+}
+
+Crossword *-- Square
+
+class CanadianCrossword {
+  -List<Clue> clues
+  --
+  +void addClue(Clue clue)
+  +void initializeGrid(List<int[2]> constraints)
+  ..Properties..
+  +List<Clue> getClues()
+}
+
+Crossword <|-- CanadianCrossword
+CanadianCrossword o-- Clue
+
+interface Generator {
+    +Crossword generate()
+}
+class CanadianGenerator {
+  -int[2] size
+  -List<int[2]> constraints
+  -Map<String, String> wordClues
+  --
+  -bool canPutWord(Crossword crossword, String word)
+}
+
+Generator <|.. CanadianGenerator
+Generator --> Crossword
+CanadianGenerator --> Clue
+CanadianGenerator --> Square
+
+@enduml

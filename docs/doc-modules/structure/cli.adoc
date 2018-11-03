@@ -1,7 +1,7 @@
 :numbered:
 === CLI
 
-image::{diagrams}/class-cli.png[]
+image::{diagrams}/class-cli.puml[CLI Class Diagram]
 
 [caption=""]
 .interface CommandDispatcher

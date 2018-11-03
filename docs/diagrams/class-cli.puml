@@ -1,0 +1,38 @@
+@startuml
+
+interface CommandDispatcher {
+  +boolean isCommand(int commandNumber)
+  +void executeCommand(int commandNumber)
+  +void addCommand(Command command)
+}
+
+class CrosswordCommandDispatcher {
+  -HashMap<int, Command> commands
+  --
+}
+
+CommandDispatcher <|.. CrosswordCommandDispatcher
+
+CrosswordCommandDispatcher o-- Command
+
+abstract class Command {
+  #Game game
+  #String name
+  --
+  +void execute()
+  ..Properties..
+  +String getName()
+}
+
+Game ()- Command
+
+Command ..|> PlayCommand
+Command ..|> ConfigureCommand
+Command ..|> GetHelpCommand
+Command ..|> QuitCommand
+Command ..|> DeleteCommand
+Command ..|> CreateCommand
+Command ..|> SaveCommand
+Command ..|> CheckCommand
+
+@enduml
