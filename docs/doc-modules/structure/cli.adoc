@@ -1,7 +1,6 @@
-:numbered:
 === CLI
 
-image::{diagrams}/class-cli.puml[CLI Class Diagram]
+link:../diagrams/class-cli.puml[CLI Class Diagram]
 
 [caption=""]
 .interface CommandDispatcher

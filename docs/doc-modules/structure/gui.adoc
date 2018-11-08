@@ -1,7 +1,6 @@
-:numbered:
 === GUI
 
-image::{diagrams}/class-gui.puml[GUI Class Diagram]
+link:../diagrams/class-gui.puml[GUI Class Diagram]
 
 [caption=""]
 .interface GameTerminal
