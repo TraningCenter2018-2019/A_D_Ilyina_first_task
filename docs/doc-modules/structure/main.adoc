@@ -1,7 +1,6 @@
-:numbered:
 === Main
 
-image::{diagrams}/class-main.puml[Main Class Diagram]
+link:../diagrams/class-main.puml[Main Class Diagram]
 
 [caption=""]
 .class Main

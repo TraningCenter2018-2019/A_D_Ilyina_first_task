@@ -1,19 +1,18 @@
-:numbered:
 === Crossword Game
 
-image::{diagrams}/class-game.puml[Game Class Diagram]
+link:../diagrams/class-game.puml[Game Class Diagram]
 
 [caption=""]
 .interface Game
 ====
-void play():: Играть.
-void configure():: Конфигурировать.
-void getHelp():: Получить помощь.
-void quit():: Выйти.
-void deleteCrossword():: Удалить кроссворд.
-void createCrossword():: Создать кроссврд.
-void saveCrossword():: Сохранить кроссврд.
-void checkCrossword():: Проверить кроссврд.
+void play():: Метод команды "Играть".
+void configure():: Метод команды "Конфигурировать".
+void getHelp():: Метод команды "Помощь".
+void quit():: Метод команды "Выйти".
+void deleteCrossword():: Метод команды "Удалить кроссворд".
+void createCrossword():: Метод команды "Создать кроссврд".
+void saveCrossword():: Метод команды "Сохранить кроссврд".
+void checkCrossword():: Метод команды "Проверить кроссврд".
 void handleInput(String input):: Метод, обрабатывающий входные данные в зависимости от состояния игры.
 ====
 
@@ -24,8 +23,8 @@ private State state:: Текущее состояние игры.
 private Crossword crossword:: Ссылка на объект кроссворда.
 private void pickCrossword(int number):: Метод выбора кроссворда из хранилища по номеру.
 private void addSymbol(int[2] position, char symbol)::
-МЕтод добавления одного символа в кроссворд.
-private void addWord(lnt[2][2] position, String word):: Метод добавления слова в кроссворд.
+Метод добавления одного символа в кроссворд.
+private void addWord(int[2][2] position, String word):: Метод добавления слова в кроссворд.
 public State getState():: Геттер поля state.
 ====
 
