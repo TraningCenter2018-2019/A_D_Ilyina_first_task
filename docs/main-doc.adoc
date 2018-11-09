@@ -10,5 +10,3 @@ Doc Writer - Anastasi Ilyina
 . link:doc-modules/ui.adoc[Пользовательский интерфейс]
 
 . link:doc-modules/structure.adoc[Структура приложения]
-
-. link:doc-modules/algorithm.adoc[Алгоритм генератора]
