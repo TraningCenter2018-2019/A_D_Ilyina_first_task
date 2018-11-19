@@ -1,7 +1,2 @@
 copy
 docs/plantUML
-
-.idea
-target
-*.iml
-*.jar
