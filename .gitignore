@@ -1,0 +1,5 @@
+copy
+.idea
+target
+*.iml
+*.jar
