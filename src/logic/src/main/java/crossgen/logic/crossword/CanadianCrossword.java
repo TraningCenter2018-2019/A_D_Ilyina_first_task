@@ -12,7 +12,6 @@ public class CanadianCrossword extends Grid {
         super(width, height);
     }
 
-    //needs to be fixed
     public List<Clue> getClues() {
         return this.clues;
     }

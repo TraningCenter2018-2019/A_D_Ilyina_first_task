@@ -1,10 +1,10 @@
 package crossgen.logic.grid;
 
-import java.util.List;
-import java.util.ArrayList;
+import java.util.*;
 
 public interface Angle {
     List<Word> findGridWords(Grid grid);
+    Map<Word, Map<Word, Integer>> findGridIntersections(Grid grid);
 }
 
 class Straight implements Angle {
@@ -24,6 +24,48 @@ class Straight implements Angle {
 
         return gridWords;
     }
+
+    @Override
+    public Map<Word, Map<Word, Integer>> findGridIntersections(Grid grid) {
+        List<Word> words = this.findGridWords(grid);
+        Map<Word, Map<Word, Integer>> gridIntersections = new HashMap<>();
+
+        for (Word word1 : words) {
+            Map<Word, Integer> intersectingWords = new HashMap<>();
+            for (Word word2 : words)
+                if (word1.isOrthogonal(word2)) {
+                    int col = word1.getCol();
+                    int row = word2.getRow();
+                    switch (word1.getDirection()) {
+                        case VERTICAL:
+                            intersectingWords.put(word2, row - word1.getRow());
+                            break;
+                        case HORIZONTAL:
+                            intersectingWords.put(word2, col - word1.getCol());
+                            break;
+                    }
+                    // necessary check for consrained grid
+                    /*
+                        if (col > word2.getWordLength() - word2.getCol() &&
+                            col <= word2.getCol() &&
+                            row > word1.getWordLength() - word1.getRow() &&
+                            row <= word1.getRow()) {
+                        switch (word1.getDirection()) {
+                            case VERTICAL:
+                                intersectingWords.put(word2, row - word1.getRow());
+                                break;
+                            case HORIZONTAL:
+                                intersectingWords.put(word2, col - word1.getCol());
+                                break;
+                        }
+                    }*/
+                }
+            if (intersectingWords.size() > 0)
+                gridIntersections.put(word1, intersectingWords);
+        }
+
+        return gridIntersections;
+    }
 }
 
 class Diagonal implements Angle {
@@ -31,8 +73,16 @@ class Diagonal implements Angle {
     public List<Word> findGridWords(Grid grid) {
         List<Word> gridWords = new ArrayList<>();
 
-        // TODO : implement me!
+        // TODO : implement diagonal strategy
 
         return gridWords;
+    }
+
+    @Override
+    public Map<Word, Map<Word, Integer>> findGridIntersections(Grid grid) {
+
+        // TODO : implement diagonal strategy
+
+        return null;
     }
 }
