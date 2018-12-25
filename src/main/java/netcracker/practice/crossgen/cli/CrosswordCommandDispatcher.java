@@ -5,7 +5,7 @@ import java.util.TreeMap;
 import netcracker.practice.crossgen.game.Game;
 
 class CrosswordCommandDispatcher implements CommandDispatcher {
-    private TreeMap<Integer, Command> commands = new TreeMap<>();
+    private final TreeMap<Integer, Command> commands = new TreeMap<>();
 
     public CrosswordCommandDispatcher(Game game) {
         addCommand(new PlayCommand(game));

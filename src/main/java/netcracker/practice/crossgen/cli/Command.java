@@ -3,9 +3,9 @@ package netcracker.practice.crossgen.cli;
 import netcracker.practice.crossgen.game.Game;
 
 public abstract class Command {
-    protected Game game;
-    private String name;
-    private String description;
+    protected final Game game;
+    private final String name;
+    private final String description;
 
     public Command(Game game, String name, String description) {
         this.game = game;

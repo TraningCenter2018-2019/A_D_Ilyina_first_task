@@ -3,22 +3,14 @@ package netcracker.practice.crossgen.logic.grid;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import netcracker.practice.crossgen.logic.crossword.CanadianCrossword;
 
 import java.util.List;
+import java.util.Map;
 
-public class GridTest {
-    @Test
-    public void testStraightAngle() {
-        Grid grid = new CanadianCrossword(4, 5);
-        Angle angle = new StraightAngle();
-        List<Word> gridWords = angle.findGridWords(grid);
-
-        assertEquals(9, gridWords.size());
-        assertEquals(4, gridWords.get(0).getWordLength());
-        assertEquals(5, gridWords.get(5).getWordLength());
-    }
+public class DiagonalAngleTest {
 
     @Test
     public void testDiagonalAngle() {
@@ -27,5 +19,15 @@ public class GridTest {
         List<Word> gridWords = angle.findGridWords(grid);
 
         assertEquals(12, gridWords.size());
+    }
+
+    @Test
+    public void testDiagonalIntersections() {
+        Grid grid = new CanadianCrossword(4, 5);
+
+        Angle angle = new DiagonalAngle();
+        Map<Word, Map<Word, Integer>> intersections = angle.findGridWordIntersections(grid);
+
+        assertEquals(12, intersections.size());
     }
 }

@@ -3,18 +3,15 @@ package netcracker.practice.crossgen.logic.grid;
 import java.util.Objects;
 
 public abstract class Word {
-    private int row;
-    private int col;
-    private Direction direction;
+
+    private final int row;
+    private final int col;
+    private final Direction direction;
 
     protected Word(int row, int col, Direction direction) {
         this.row = row;
         this.col = col;
         this.direction = direction;
-    }
-
-    public int getRow() {
-        return this.row;
     }
 
     public int getCol() {
@@ -25,7 +22,11 @@ public abstract class Word {
         return this.direction;
     }
 
-    public abstract int getWordLength();
+    public int getRow() {
+        return this.row;
+    }
+
+    public abstract int getLength();
 
     public boolean isOrthogonal(Word word) {
         return this.direction.isOrthogonal(word.direction);
@@ -46,4 +47,11 @@ public abstract class Word {
     public int hashCode() {
         return Objects.hash(row, col, direction);
     }
+
+    @Override
+    public String toString() {
+        return "(" + row + ", " + col + ") " + direction.getName() + " " + getLength();
+        //return direction.getAngle().wordToString(this, grid);
+    }
+
 }

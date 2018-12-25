@@ -4,7 +4,7 @@ import netcracker.practice.crossgen.logic.crossword.CanadianCrossword;
 
 public class CrosswordGame implements Game {
     private CanadianCrossword crossword;
-    private GameState state;
+    private final GameState state;
 
     public CrosswordGame() {
         state = new InitialState();

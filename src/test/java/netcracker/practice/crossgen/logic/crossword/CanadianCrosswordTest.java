@@ -8,11 +8,12 @@ import netcracker.practice.crossgen.logic.grid.Direction;
 
 import org.junit.Test;
 
-public class CrosswordTest
+public class CanadianCrosswordTest
 {
     @Test
     public void testGrid() {
         Grid grid = new CanadianCrossword(10, 20);
+
         assertEquals(10, grid.getWidth());
         assertEquals(20, grid.getHeight());
     }
@@ -22,10 +23,11 @@ public class CrosswordTest
         Clue clue1 = new Clue(0, 0, Direction.HORIZONTAL, "one", "...");
         clue1.setClueNumber(1);
         Clue clue2 = new Clue(0, 0, Direction.VERTICAL, "oak", "...");
-        clue1.setClueNumber(1);
+        clue2.setClueNumber(1);
 
         assertEquals(1, clue1.getClueNumber());
-        assertEquals(3, clue1.getWordLength());
+        assertEquals(1, clue2.getClueNumber());
+
         assertTrue(clue1.isOrthogonal(clue2));
     }
 }

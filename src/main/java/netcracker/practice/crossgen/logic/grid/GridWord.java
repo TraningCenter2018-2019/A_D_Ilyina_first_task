@@ -1,7 +1,8 @@
 package netcracker.practice.crossgen.logic.grid;
 
 public class GridWord extends Word {
-    private int length;
+
+    private final int length;
 
     public GridWord(int row, int col, Direction direction, int length) {
         super(row, col, direction);
@@ -9,7 +10,8 @@ public class GridWord extends Word {
     }
 
     @Override
-    public int getWordLength() {
+    public int getLength() {
         return this.length;
     }
+
 }

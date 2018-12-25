@@ -1,6 +1,7 @@
 package netcracker.practice.crossgen.logic.grid;
 
 public class AnglePicker {
+
     public Angle getAngle(String angleType) {
         if (angleType == null)
             return null;
@@ -12,4 +13,5 @@ public class AnglePicker {
         }
         return null;
     }
+
 }
