@@ -85,65 +85,85 @@ public class StraightAngleTest {
     }
 
     @Test
-    public void testWordConflictsGrid() {
-        Grid grid = new CanadianCrossword(3, 3);
-        grid.setSymbol(0, 0, Settings.PROHIBITED_SYMBOL);
-        grid.setSymbol(0, 2, Settings.PROHIBITED_SYMBOL);
-        grid.setSymbol(2, 0, Settings.PROHIBITED_SYMBOL);
-        grid.setSymbol(2, 2, Settings.PROHIBITED_SYMBOL);
-
-        log.fine("Current grid:\n" + grid.toString());
-
+    public void testPlaceStringInGrid() {
+        Grid cross = new CanadianCrossword(5, 5);
+        Grid grid = new CharGrid(cross);
+        Word word = new GridWord(2, 4, Direction.VERTICAL, 2);
+        String wordString = "no";
         Angle angle = new StraightAngle();
 
-        Word word1 = new GridWord(0, 1, Direction.HORIZONTAL, 2);
-        String wordString1 = "aa";
-        assertTrue(angle.wordConflictsGrid(word1, wordString1, grid));
+        angle.placeStringInGrid(wordString, word, grid);
+        log.info("Grid after placement:\n" + grid.toString());
 
-        Word word2 = new GridWord(0, 1, Direction.VERTICAL, 3);
-        String wordString2 = "aaa";
-        assertFalse(angle.wordConflictsGrid(word2, wordString2, grid));
-
-        grid.setSymbol(2, 1, 'a');
-        log.fine("Current grid:\n" + grid.toString());
-        assertFalse(angle.wordConflictsGrid(word2, wordString2, grid));
-
-        grid.setSymbol(0, 1, 'b');
-        log.fine("Current grid:\n" + grid.toString());
-        assertTrue(angle.wordConflictsGrid(word2, wordString2, grid));
+        assertEquals('n', grid.getSymbol(2, 4));
+        assertEquals('o', grid.getSymbol(3, 4));
     }
 
     @Test
-    public void testPlaceStringInGrid() {
-        // TODO : test
-    }
+    public void testPlaceWordInGrid() {
+        Grid cross = new CanadianCrossword(5, 5);
+        Grid grid = new CharGrid(cross);
+        Word word = new GridWord(1, 1, Direction.HORIZONTAL, 3);
+        String wordString = "yes";
+        Angle angle = new StraightAngle();
 
-    @Test
-    public void testPlaceWord() {
-        // TODO : test
+        angle.placeWordInGrid(wordString, word, grid);
+        log.info("Grid after placement:\n" + grid.toString());
+
+        assertEquals(Settings.PROHIBITED_SYMBOL, grid.getSymbol(1, 0));
+        assertEquals('y', grid.getSymbol(1, 1));
+        assertEquals('e', grid.getSymbol(1, 2));
+        assertEquals('s', grid.getSymbol(1, 3));
+        assertEquals(Settings.PROHIBITED_SYMBOL, grid.getSymbol(1, 4));
     }
 
     @Test
     public void testSetProhibitedBorders() {
-        Grid grid = new CanadianCrossword(5, 5);
+        Grid cross = new CanadianCrossword(5, 5);
+        Grid grid = new CharGrid(cross);
         Angle angle = new StraightAngle();
-        log.fine("Initial grid:\n" + grid.toString());
+        log.info("Initial grid:\n" + grid.toString());
 
         Word word1 = new GridWord(4, 2, Direction.HORIZONTAL, 3);
         angle.setProhibitedBorders(word1, grid);
-        log.fine("Current grid:\n" + grid.toString());
+        log.info("Current grid:\n" + grid.toString());
         assertEquals(Settings.PROHIBITED_SYMBOL, grid.getSymbol(4, 1));
 
         Word word2 = new GridWord(1, 0, Direction.VERTICAL, 3);
         angle.setProhibitedBorders(word2, grid);
-        log.fine("Current grid:\n" + grid.toString());
+        log.info("Current grid:\n" + grid.toString());
         assertEquals(Settings.PROHIBITED_SYMBOL, grid.getSymbol(0, 0));
         assertEquals(Settings.PROHIBITED_SYMBOL, grid.getSymbol(4, 0));
     }
 
     @Test
-    public void testWordToString() {
-        // TODO : test
+    public void testWordConflictsGrid() {
+        Grid cross = new CanadianCrossword(3, 3);
+        Grid grid = new CharGrid(cross);
+        grid.setSymbol(0, 0, Settings.PROHIBITED_SYMBOL);
+        grid.setSymbol(0, 2, Settings.PROHIBITED_SYMBOL);
+        grid.setSymbol(2, 0, Settings.PROHIBITED_SYMBOL);
+        grid.setSymbol(2, 2, Settings.PROHIBITED_SYMBOL);
+
+        log.info("Current grid:\n" + grid.toString());
+
+        Angle angle = new StraightAngle();
+
+        Word word1 = new GridWord(0, 1, Direction.HORIZONTAL, 2);
+        String wordString1 = "aa";
+        assertTrue(angle.wordConflictsGrid(wordString1, word1, grid));
+
+        Word word2 = new GridWord(0, 1, Direction.VERTICAL, 3);
+        String wordString2 = "aaa";
+        assertFalse(angle.wordConflictsGrid(wordString2, word2, grid));
+
+        grid.setSymbol(2, 1, 'a');
+        log.info("Current grid:\n" + grid.toString());
+        assertFalse(angle.wordConflictsGrid(wordString2, word2, grid));
+
+        grid.setSymbol(0, 1, 'b');
+        log.info("Current grid:\n" + grid.toString());
+        assertTrue(angle.wordConflictsGrid(wordString2, word2, grid));
     }
 
 }

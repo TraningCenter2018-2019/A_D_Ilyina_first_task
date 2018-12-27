@@ -1,7 +1,6 @@
 package netcracker.practice.crossgen.logic.grid;
 
 import java.util.List;
-import java.util.Map;
 
 public interface Angle {
 
@@ -13,18 +12,14 @@ public interface Angle {
 
     List<Word> findGridWords(Grid grid);
 
-    Map<Word, Map<Word, Integer>> findGridWordIntersections(Grid grid);
-
     boolean fitsWithinBounds(Word word, Grid grid);
 
-    void placeStringInGrid(String str, int row, int col, Grid grid);
+    void placeStringInGrid(String s, Word word, Grid grid);
 
-    void placeWord(Word word, String wordString, Grid grid);
+    void placeWordInGrid(String s, Word word, Grid grid);
 
     void setProhibitedBorders(Word word, Grid grid);
 
-    boolean wordConflictsGrid(Word word, String wordString, Grid grid);
-
-    String wordToString(Word word, Grid grid);
+    boolean wordConflictsGrid(String s, Word word, Grid grid);
 
 }

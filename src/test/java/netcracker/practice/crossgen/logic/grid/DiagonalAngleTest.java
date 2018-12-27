@@ -21,13 +21,4 @@ public class DiagonalAngleTest {
         assertEquals(12, gridWords.size());
     }
 
-    @Test
-    public void testDiagonalIntersections() {
-        Grid grid = new CanadianCrossword(4, 5);
-
-        Angle angle = new DiagonalAngle();
-        Map<Word, Map<Word, Integer>> intersections = angle.findGridWordIntersections(grid);
-
-        assertEquals(12, intersections.size());
-    }
 }

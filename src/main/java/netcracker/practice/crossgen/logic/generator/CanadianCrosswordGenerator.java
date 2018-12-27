@@ -3,6 +3,7 @@ package netcracker.practice.crossgen.logic.generator;
 import java.util.*;
 
 import netcracker.practice.crossgen.Settings;
+import netcracker.practice.crossgen.logic.crossword.CanadianCrossword;
 import netcracker.practice.crossgen.logic.crossword.Clue;
 import netcracker.practice.crossgen.logic.grid.Angle;
 import netcracker.practice.crossgen.logic.grid.Grid;
@@ -14,26 +15,17 @@ class CanadianCrosswordGenerator implements Generator {
     private final Map<String, String> clues;
     private final Grid grid;
 
-    private Map<Word, Map<Word, Integer>> gridIntersections = new HashMap<>();
     private final Map<String, List<Intersection>> wordIntersections = new HashMap<>();
 
     private final List<Solution> bestSolutions = new ArrayList<>();
-
 
     public CanadianCrosswordGenerator(Angle angle, Grid grid, Map<String, String> clues) {
         this.angle = angle;
         this.clues = clues;
         this.grid = grid;
 
-        //computeGridIntersections();
         computeWordIntersections();
     }
-
-
-    private void computeGridIntersections() {
-        gridIntersections = angle.findGridWordIntersections(grid);
-    }
-
 
     private void computeWordIntersections() {
         for (String word1 : clues.keySet()) {
@@ -48,19 +40,18 @@ class CanadianCrosswordGenerator implements Generator {
         }
     }
 
-
     @Override
     public Grid generate() {
         long startTime = System.currentTimeMillis();
 
-        while (System.currentTimeMillis() - startTime < Settings.MAX_TIME) {
+        while (System.currentTimeMillis() - startTime < Settings.GENERATION_TIMEOUT) {
             Solution newSolution = generateSolution();
             if (newSolution.score() > 1)
                 if (bestSolutions.isEmpty())
                     bestSolutions.add(newSolution);
                 else {
                     int bestScore = bestSolutions.get(0).score();
-                    if (newSolution.score() == bestScore) {
+                    if (newSolution.score() == bestScore && !bestSolutions.contains(newSolution)) {
                         bestSolutions.add(newSolution);
                     }
                     else if (newSolution.score() > bestScore) {
@@ -76,8 +67,7 @@ class CanadianCrosswordGenerator implements Generator {
         return pickRandomSolution().toCrossword();
     }
 
-
-    private Solution generateSolution() {
+    public Solution generateSolution() {
         Solution solution = new Solution(grid);
         LinkedList<Clue> potentialClues = new LinkedList<>();
         potentialClues.add(pickRandomFirstClue());
@@ -86,12 +76,15 @@ class CanadianCrosswordGenerator implements Generator {
             Collections.shuffle(potentialClues);
             Clue nextClue = potentialClues.pop();
 
-            if (solution.conflicts(nextClue))
+            if (solution.contains(nextClue.getAnswer()) || solution.conflicts(nextClue))
                 continue;
 
             solution.add(nextClue);
 
-            for (Intersection intersection : wordIntersections.get(nextClue.getWord())) {
+            for (Intersection intersection : wordIntersections.get(nextClue.getAnswer())) {
+                if (solution.contains(intersection.getIntersectingWord()))
+                    continue;
+
                 int row = angle.getIntersectingWordRow(nextClue,
                         intersection.getPosition1(), intersection.getPosition2());
                 int col = angle.getIntersectingWordCol(nextClue,
@@ -99,7 +92,7 @@ class CanadianCrosswordGenerator implements Generator {
                 Clue newPotentialClue = new Clue(row, col, nextClue.getDirection().orthogonal(),
                         intersection.getIntersectingWord(), clues.get(intersection.getIntersectingWord()));
 
-                if (!solution.contains(newPotentialClue) && solution.fitsWithinBounds(newPotentialClue))
+                if (solution.fitsWithinBounds(newPotentialClue))
                     potentialClues.add(newPotentialClue);
             }
         }
@@ -107,21 +100,21 @@ class CanadianCrosswordGenerator implements Generator {
         return solution;
     }
 
-
     private Clue pickRandomFirstClue() {
         ArrayList<Map.Entry<String, String>> wordList = new ArrayList<>(clues.entrySet());
         Collections.shuffle(wordList);
         Map.Entry<String, String> firstEntry = wordList.get(0);
 
-        Clue firstClue = (Clue) angle.getRandomWord(grid, firstEntry.getKey().length());
-        firstClue.setWord(firstEntry.getKey());
-        firstClue.setClue(firstEntry.getValue());
+        Word word = angle.getRandomWord(grid, firstEntry.getKey().length());
+        Clue firstClue = new Clue(word.getRow(), word.getCol(), word.getDirection(),
+                firstEntry.getKey(), firstEntry.getValue());
 
         return firstClue;
     }
 
-
-    private Solution pickRandomSolution() {
+    public Solution pickRandomSolution() {
+        if (bestSolutions.isEmpty())
+            return null;
         Collections.shuffle(bestSolutions);
         return bestSolutions.get(0);
     }

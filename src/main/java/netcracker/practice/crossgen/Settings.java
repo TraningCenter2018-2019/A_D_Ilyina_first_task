@@ -5,13 +5,13 @@ public interface Settings {
     /**
      * Grid settings
      */
-    char EMPTY_SYMBOL = ' ';
+    char EMPTY_SYMBOL = '_';
     char PROHIBITED_SYMBOL = '#';
 
     /**
      * Generator settings
      */
-    long MAX_TIME = 1000;
     int BAD_SOLUTION_GAP = 2;
+    long GENERATION_TIMEOUT = 1000;
 
 }

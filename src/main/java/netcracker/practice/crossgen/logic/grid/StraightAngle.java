@@ -20,7 +20,6 @@ public class StraightAngle implements Angle {
         return col;
     }
 
-
     @Override
     public int getIntersectingWordRow(Word intersectedWord, int position1, int position2) {
         int row = -1;
@@ -35,7 +34,6 @@ public class StraightAngle implements Angle {
         return row;
     }
 
-
     @Override
     public Word getRandomWord(Grid grid, int length) {
         List<Word> gridWords = findGridWords(grid);
@@ -48,14 +46,8 @@ public class StraightAngle implements Angle {
         }
 
         int col = (new Random()).nextInt(randomWord.getLength() - length + 1);
-        return new Word(randomWord.getRow(), col, Direction.HORIZONTAL) {
-            @Override
-            public int getLength() {
-                return length;
-            }
-        };
+        return randomWord;
     }
-
 
     @Override
     public List<Word> findGridWords(Grid grid) {
@@ -83,76 +75,47 @@ public class StraightAngle implements Angle {
                 length++;
             }
 
-        /*
-        for (int i = 0; i < grid.getHeight(); i++) {
-            gridWords.add(new GridWord(i, 0,
-                    Direction.HORIZONTAL, grid.getWidth()));
-        }
-
-        for (int j = 0; j < grid.getWidth(); j++) {
-            gridWords.add(new GridWord(0, j,
-                    Direction.VERTICAL, grid.getHeight()));
-        }
-        */
-
         return gridWords;
     }
 
-
-    @Override
-    public Map<Word, Map<Word, Integer>> findGridWordIntersections(Grid grid) {
-        List<Word> words = this.findGridWords(grid);
-        Map<Word, Map<Word, Integer>> gridIntersections = new HashMap<>();
-
-        for (Word word1 : words) {
-            Map<Word, Integer> intersectingWords = new HashMap<>();
-            for (Word word2 : words)
-                if (word1.isOrthogonal(word2)) {
-                    switch (word1.getDirection()) {
-                        case VERTICAL:
-                            intersectingWords.put(word2, word2.getRow() - word1.getRow());
-                            break;
-                        case HORIZONTAL:
-                            intersectingWords.put(word2, word2.getCol() - word1.getCol());
-                            break;
-                    }
-                    // necessary check for constrained grid
-                /*
-                    if (col > word2.getWordLength() - word2.getCol() &&
-                        col <= word2.getCol() &&
-                        row > word1.getWordLength() - word1.getRow() &&
-                        row <= word1.getRow()) {
-                    switch (word1.getDirection()) {
-                        case VERTICAL:
-                            intersectingWords.put(word2, row - word1.getRow());
-                            break;
-                        case HORIZONTAL:
-                            intersectingWords.put(word2, col - word1.getCol());
-                            break;
-                    }
-                }*/
-                }
-            if (intersectingWords.size() > 0)
-                gridIntersections.put(word1, intersectingWords);
-        }
-
-        return gridIntersections;
-    }
-
-
     @Override
     public boolean fitsWithinBounds(Word word, Grid grid) {
+        if (word.getCol() < 0 || word.getRow() < 0)
+            return false;
         switch (word.getDirection()) {
             case HORIZONTAL:
                 if (word.getCol() + word.getLength() > grid.getWidth())
                     return false;
+                break;
             case VERTICAL:
                 if (word.getRow() + word.getLength() > grid.getHeight())
                     return false;
+                break;
         }
         return true;
     }
 
+    @Override
+    public void placeStringInGrid(String s, Word word, Grid grid) {
+        switch (word.getDirection()) {
+            case HORIZONTAL:
+                for (int i = 0, row = word.getRow(), col = word.getCol(); i <  s.length(); i++) {
+                    grid.setSymbol(row, i + col, s.charAt(i));
+                }
+                break;
+            case VERTICAL:
+                for (int i = 0, row = word.getRow(), col = word.getCol(); i <  s.length(); i++) {
+                    grid.setSymbol(i + row, col, s.charAt(i));
+                }
+                break;
+        }
+    }
+
+    @Override
+    public void placeWordInGrid(String s, Word word, Grid grid) {
+        placeStringInGrid(s, word, grid);
+        setProhibitedBorders(word, grid);
+    }
 
     @Override
     public void setProhibitedBorders(Word word, Grid grid) {
@@ -172,46 +135,42 @@ public class StraightAngle implements Angle {
         }
     }
 
-
     @Override
-    public boolean wordConflictsGrid(Word word, String wordString, Grid grid) {
+    public boolean wordConflictsGrid(String s, Word word, Grid grid) {
         int col = word.getCol(), row = word.getRow(), length = word.getLength();
         switch (word.getDirection()) {
             case HORIZONTAL:
-                for (int i = col; i < col + length; i++) {
+                int endCol = col + length - 1;
+                if ((col > 0 && !(
+                        grid.getSymbol(row, col - 1) == Settings.EMPTY_SYMBOL ||
+                        grid.getSymbol(row, col - 1) == Settings.PROHIBITED_SYMBOL)) ||
+                        (endCol < grid.getWidth() - 1 && !(
+                        grid.getSymbol(row, endCol + 1) == Settings.EMPTY_SYMBOL ||
+                        grid.getSymbol(row, endCol + 1) == Settings.PROHIBITED_SYMBOL)))
+                    return true;
+                for (int i = col; i <= endCol; i++) {
                     char gridSymbol = grid.getSymbol(row, i);
-                    if (!(gridSymbol == Settings.EMPTY_SYMBOL || wordString.charAt(i - col) == gridSymbol))
+                    if (!(gridSymbol == Settings.EMPTY_SYMBOL || s.charAt(i - col) == gridSymbol))
                         return true;
                 }
+                break;
             case VERTICAL:
-                for (int i = row; i < row + length; i++) {
+                int endRow = row + length - 1;
+                if ((row > 0 && !(
+                        grid.getSymbol(row - 1, col) == Settings.EMPTY_SYMBOL ||
+                        grid.getSymbol(row - 1, col) == Settings.PROHIBITED_SYMBOL)) ||
+                        (endRow < grid.getHeight() - 1 && !(
+                        grid.getSymbol(endRow + 1, col) == Settings.EMPTY_SYMBOL ||
+                        grid.getSymbol(endRow + 1, col) == Settings.PROHIBITED_SYMBOL)))
+                    return true;
+                for (int i = row; i <= endRow; i++) {
                     char gridSymbol = grid.getSymbol(i, col);
-                    if (!(gridSymbol == Settings.EMPTY_SYMBOL || wordString.charAt(i - row) == gridSymbol))
+                    if (!(gridSymbol == Settings.EMPTY_SYMBOL || s.charAt(i - row) == gridSymbol))
                         return true;
                 }
+                break;
         }
         return false;
-    }
-
-
-    @Override
-    public String wordToString(Word word, Grid grid) {
-        StringBuilder sb = new StringBuilder();
-
-        switch (word.getDirection()) {
-            case HORIZONTAL:
-                for (int col = word.getCol(), row = word.getRow(), n = word.getLength(), width = grid.getWidth();
-                     col < n && col < width; col++)
-                    sb.append(grid.getSymbol(row, col));
-                break;
-            case VERTICAL:
-                for (int col = word.getCol(), row = word.getRow(), n = word.getLength(), height = grid.getHeight();
-                     row < n && row < height; row++)
-                    sb.append(grid.getSymbol(row, col));
-                break;
-        }
-
-        return sb.toString();
     }
 
 }

@@ -1,22 +1,42 @@
 package netcracker.practice.crossgen.logic.crossword;
 
-import netcracker.practice.crossgen.logic.grid.Word;
+import netcracker.practice.crossgen.logic.grid.Angle;
 import netcracker.practice.crossgen.logic.grid.Direction;
+import netcracker.practice.crossgen.logic.grid.GridWord;
+import netcracker.practice.crossgen.logic.grid.Word;
 
-public class Clue extends Word {
+import java.util.Objects;
+
+public class Clue implements Word {
 
     private int clueNumber = 0;
-    private String clue;
-    private String word;
+    private final GridWord gridWord;
+    private final String answer;
+    private final String clue;
 
-    public Clue(int row, int col, Direction direction, String word, String clue) {
-        super(row, col, direction);
-        this.word = word;
+    public Clue(GridWord gridWord, String answer, String clue) {
+        this.gridWord = gridWord;
+        this.answer = answer;
         this.clue = clue;
     }
 
+    public Clue(int row, int col, Direction direction, String answer, String clue) {
+        this.gridWord = new GridWord(row, col, direction, answer.length());
+        this.answer = answer;
+        this.clue = clue;
+    }
+
+    @Override
+    public Angle getAngle() {
+        return gridWord.getAngle();
+    }
+
+    public String getAnswer() {
+        return answer;
+    }
+
     public char getCharAt(int position) {
-        return word.charAt(position);
+        return answer.charAt(position);
     }
 
     public int getClueNumber() {
@@ -27,20 +47,42 @@ public class Clue extends Word {
         this.clueNumber = clueNumber;
     }
 
-    public String getWord() {
-        return word;
+    @Override
+    public int getCol() {
+        return gridWord.getCol();
     }
 
-    public void setClue(String clue) {
-        this.clue = clue;
+    @Override
+    public Direction getDirection() {
+        return gridWord.getDirection();
     }
 
-    public void setWord(String word) {
-        this.word = word;
+    @Override
+    public int getRow() {
+        return gridWord.getRow();
     }
 
     @Override
     public int getLength() {
-        return this.word.length();
+        return gridWord.getLength();
+    }
+
+    @Override
+    public boolean isOrthogonal(Word word) {
+        return gridWord.isOrthogonal(word);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == this) return true;
+        if (!(o instanceof Clue)) return false;
+
+        Clue clue = (Clue) o;
+        return answer == clue.answer && this.clue == clue.clue && gridWord.equals(clue.gridWord);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(answer.hashCode(), clue.hashCode(), gridWord.hashCode());
     }
 }
