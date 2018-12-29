@@ -5,8 +5,8 @@ public interface Settings {
     /**
      * Grid settings
      */
+    char CONSTRAINED_SYMBOL = '#';
     char EMPTY_SYMBOL = '_';
-    char PROHIBITED_SYMBOL = '#';
 
     /**
      * Generator settings

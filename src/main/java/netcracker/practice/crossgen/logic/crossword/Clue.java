@@ -31,10 +31,6 @@ public class Clue implements Word {
         return gridWord.getAngle();
     }
 
-    public String getAnswer() {
-        return answer;
-    }
-
     public char getCharAt(int position) {
         return answer.charAt(position);
     }
@@ -58,13 +54,18 @@ public class Clue implements Word {
     }
 
     @Override
+    public int getLength() {
+        return gridWord.getLength();
+    }
+
+    @Override
     public int getRow() {
         return gridWord.getRow();
     }
 
     @Override
-    public int getLength() {
-        return gridWord.getLength();
+    public String getString() {
+        return answer;
     }
 
     @Override
@@ -83,6 +84,6 @@ public class Clue implements Word {
 
     @Override
     public int hashCode() {
-        return Objects.hash(answer.hashCode(), clue.hashCode(), gridWord.hashCode());
+        return Objects.hash(answer, clue, gridWord);
     }
 }

@@ -1,19 +1,21 @@
 package netcracker.practice.crossgen.logic.crossword;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Objects;
+import java.util.*;
 
-import netcracker.practice.crossgen.logic.grid.CharGrid;
 import netcracker.practice.crossgen.logic.grid.BaseGrid;
+import netcracker.practice.crossgen.logic.grid.CharGrid;
+import netcracker.practice.crossgen.logic.grid.Coordinate;
 
 public class CanadianCrossword extends BaseGrid {
 
-    private final List<Clue> clues = new ArrayList<>();
+    private final TreeSet<Clue> clues = new TreeSet<>(new ClueComparator());
 
     public CanadianCrossword(int height, int width) {
         super(height, width);
+    }
+
+    public CanadianCrossword(int height, int width, Set<Coordinate> constraints) {
+        super(height, width, constraints);
     }
 
     public void addClue(Clue clue) {
@@ -21,17 +23,31 @@ public class CanadianCrossword extends BaseGrid {
     }
 
     public void addAllClues(Collection<Clue> clues) {
-        //clues.addAll(clues);
         for (Clue clue : clues)
             this.clues.add(clue);
+    }
+
+    public void clear() {
+        clues.clear();
     }
 
     public int cluesCount() {
         return clues.size();
     }
 
-    public List<Clue> getClues() {
+    public Set<Clue> getClues() {
         return this.clues;
+    }
+
+    public void setClueNumbers() {
+        ClueComparator comparator = new ClueComparator();
+        Clue previous = clues.first();
+        for (Clue clue :clues) {
+            int number = comparator.compare(clue, previous) == 0 ?
+                    previous.getClueNumber() :
+                    previous.getClueNumber() + 1;
+            clue.setClueNumber(number);
+        }
     }
 
     @Override
@@ -39,30 +55,18 @@ public class CanadianCrossword extends BaseGrid {
         return getCharGrid().getSymbol(row, col);
     }
 
-    @Override
-    public void setSymbol(int row, int col, char symbol) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public String stringify() {
-        return getCharGrid().toString();
-    }
-
     private CharGrid getCharGrid() {
-        CharGrid cg = new CharGrid(this);
+        CharGrid charGrid = new CharGrid(this);
         for (Clue clue : clues)
-            cg.place(clue.getAnswer(), clue);
-        return cg;
+            charGrid.put(clue);
+        return charGrid;
     }
 
     @Override
     public boolean equals(Object o) {
         if (o == this) return true;
         if (!(o instanceof CanadianCrossword)) return false;
-
-        CanadianCrossword cross = (CanadianCrossword) o;
-        return super.equals(o) && clues.containsAll(cross.clues) && cross.clues.containsAll(clues);
+        return super.equals(o) && clues.equals(((CanadianCrossword) o).clues);
     }
 
     @Override
@@ -72,6 +76,7 @@ public class CanadianCrossword extends BaseGrid {
 
     @Override
     public String toString() {
-        return super.toString() + " clues count: " + cluesCount();
+        return getCharGrid().toString();
     }
+
 }

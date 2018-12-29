@@ -2,7 +2,6 @@ package netcracker.practice.crossgen.logic.generator;
 
 import netcracker.practice.crossgen.logic.crossword.CanadianCrossword;
 import netcracker.practice.crossgen.logic.crossword.Clue;
-import netcracker.practice.crossgen.logic.grid.Grid;
 import netcracker.practice.crossgen.logic.grid.CharGrid;
 
 import java.util.Objects;
@@ -14,17 +13,18 @@ class Solution {
     private final CharGrid charGrid;
     private final Map<String, Clue> cluesInGrid = new HashMap<>();
 
-    public Solution(Grid grid) {
-        this.charGrid = new CharGrid(grid);
+    public Solution(CanadianCrossword crossword) {
+        this.charGrid = new CharGrid(crossword);
     }
 
     public void add(Clue clue) {
-        clue.getAngle().placeWordInGrid(clue.getAnswer(), clue, charGrid);
-        cluesInGrid.put(clue.getAnswer(), clue);
+        charGrid.put(clue);
+        charGrid.setConstrainedBorders(clue);
+        cluesInGrid.put(clue.getString(), clue);
     }
 
     public boolean conflicts(Clue clue) {
-        return clue.getAngle().wordConflictsGrid(clue.getAnswer(), clue, charGrid);
+        return clue.getAngle().wordConflictsGrid(clue, charGrid);
     }
 
     public boolean contains(String word) {
@@ -32,7 +32,7 @@ class Solution {
     }
 
     public boolean contains(Clue clue) {
-        return cluesInGrid.keySet().contains(clue.getAnswer());
+        return cluesInGrid.keySet().contains(clue.getString());
     }
 
     public boolean fitsWithinBounds(Clue clue) {
@@ -44,9 +44,9 @@ class Solution {
     }
 
     public CanadianCrossword toCrossword() {
-        Grid grid = charGrid.getGrid();
-        CanadianCrossword crossword = new CanadianCrossword(grid.getHeight(), grid.getWidth());
+        CanadianCrossword crossword = (CanadianCrossword) charGrid.getGrid();
         crossword.addAllClues(cluesInGrid.values());
+        crossword.setClueNumbers();
         return crossword;
     }
 
@@ -56,7 +56,7 @@ class Solution {
         if (!(o instanceof Solution)) return false;
 
         Solution solution = (Solution) o;
-        return charGrid.equals(solution.charGrid);
+        return cluesInGrid.equals(solution.cluesInGrid);
     }
 
     @Override
@@ -66,7 +66,7 @@ class Solution {
 
     @Override
     public String toString() {
-        return charGrid.stringify();
+        return charGrid.toString();
     }
 
 }

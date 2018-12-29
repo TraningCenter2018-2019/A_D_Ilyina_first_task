@@ -34,24 +34,18 @@ public class DiagonalAngle implements Angle {
         return false;
     }
 
-
     @Override
-    public void placeStringInGrid(String s, Word word, Grid grid) {
+    public void putWordInGrid(Word word, MutableGrid grid) {
 
     }
 
     @Override
-    public void placeWordInGrid(String s, Word word, Grid grid) {
+    public void setConstrainedBorders(Word word, MutableGrid grid) {
 
     }
 
     @Override
-    public void setProhibitedBorders(Word word, Grid grid) {
-
-    }
-
-    @Override
-    public boolean wordConflictsGrid(String s, Word word, Grid grid) {
+    public boolean wordConflictsGrid(Word word, MutableGrid grid) {
         return true;
     }
 

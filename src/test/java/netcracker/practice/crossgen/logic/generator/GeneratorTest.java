@@ -78,7 +78,7 @@ public class GeneratorTest {
         if (genCrossword == null)
             log.info("Solution not found");
         else
-            log.info("Generated crossword:\n" + genCrossword.stringify());
+            log.info("Generated crossword:\n" + genCrossword.toString());
     }
 
 }

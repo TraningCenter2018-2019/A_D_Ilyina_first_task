@@ -1,5 +1,8 @@
 package netcracker.practice.crossgen.logic.grid;
 
+import netcracker.practice.crossgen.Settings;
+
+import java.util.Arrays;
 import java.util.Objects;
 
 public class GridWord implements Word {
@@ -39,6 +42,13 @@ public class GridWord implements Word {
     @Override
     public int getRow() {
         return this.row;
+    }
+
+    @Override
+    public String getString() {
+        final char[] symbols = new char[length];
+        Arrays.fill(symbols, Settings.EMPTY_SYMBOL);
+        return new String(symbols);
     }
 
     @Override

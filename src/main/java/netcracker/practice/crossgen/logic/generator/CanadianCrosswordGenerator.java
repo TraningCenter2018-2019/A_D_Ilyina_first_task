@@ -13,7 +13,7 @@ class CanadianCrosswordGenerator implements Generator {
 
     private final Angle angle;
     private final Map<String, String> clues;
-    private final Grid grid;
+    private final CanadianCrossword crossword;
 
     private final Map<String, List<Intersection>> wordIntersections = new HashMap<>();
 
@@ -22,7 +22,11 @@ class CanadianCrosswordGenerator implements Generator {
     public CanadianCrosswordGenerator(Angle angle, Grid grid, Map<String, String> clues) {
         this.angle = angle;
         this.clues = clues;
-        this.grid = grid;
+
+        if (grid instanceof CanadianCrossword)
+            this.crossword = (CanadianCrossword) grid;
+        else
+            this.crossword = new CanadianCrossword(grid.getHeight(), grid.getWidth(), grid.getConstraints());
 
         computeWordIntersections();
     }
@@ -42,6 +46,7 @@ class CanadianCrosswordGenerator implements Generator {
 
     @Override
     public Grid generate() {
+        crossword.clear();
         long startTime = System.currentTimeMillis();
 
         while (System.currentTimeMillis() - startTime < Settings.GENERATION_TIMEOUT) {
@@ -61,14 +66,11 @@ class CanadianCrosswordGenerator implements Generator {
                 }
         }
 
-        if (bestSolutions.isEmpty())
-            return null;
-
         return pickRandomSolution().toCrossword();
     }
 
     public Solution generateSolution() {
-        Solution solution = new Solution(grid);
+        Solution solution = new Solution(crossword);
         LinkedList<Clue> potentialClues = new LinkedList<>();
         potentialClues.add(pickRandomFirstClue());
 
@@ -76,12 +78,12 @@ class CanadianCrosswordGenerator implements Generator {
             Collections.shuffle(potentialClues);
             Clue nextClue = potentialClues.pop();
 
-            if (solution.contains(nextClue.getAnswer()) || solution.conflicts(nextClue))
+            if (solution.contains(nextClue.getString()) || solution.conflicts(nextClue))
                 continue;
 
             solution.add(nextClue);
 
-            for (Intersection intersection : wordIntersections.get(nextClue.getAnswer())) {
+            for (Intersection intersection : wordIntersections.get(nextClue.getString())) {
                 if (solution.contains(intersection.getIntersectingWord()))
                     continue;
 
@@ -105,7 +107,7 @@ class CanadianCrosswordGenerator implements Generator {
         Collections.shuffle(wordList);
         Map.Entry<String, String> firstEntry = wordList.get(0);
 
-        Word word = angle.getRandomWord(grid, firstEntry.getKey().length());
+        Word word = angle.getRandomWord(crossword, firstEntry.getKey().length());
         Clue firstClue = new Clue(word.getRow(), word.getCol(), word.getDirection(),
                 firstEntry.getKey(), firstEntry.getValue());
 

@@ -14,12 +14,10 @@ public interface Angle {
 
     boolean fitsWithinBounds(Word word, Grid grid);
 
-    void placeStringInGrid(String s, Word word, Grid grid);
+    void putWordInGrid(Word word, MutableGrid grid);
 
-    void placeWordInGrid(String s, Word word, Grid grid);
+    void setConstrainedBorders(Word word, MutableGrid grid);
 
-    void setProhibitedBorders(Word word, Grid grid);
-
-    boolean wordConflictsGrid(String s, Word word, Grid grid);
+    boolean wordConflictsGrid(Word word, MutableGrid grid);
 
 }

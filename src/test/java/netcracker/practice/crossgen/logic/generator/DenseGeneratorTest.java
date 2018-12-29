@@ -3,12 +3,14 @@ package netcracker.practice.crossgen.logic.generator;
 import netcracker.practice.crossgen.logic.crossword.CanadianCrossword;
 import netcracker.practice.crossgen.logic.grid.Angle;
 import netcracker.practice.crossgen.logic.grid.AnglePicker;
+import netcracker.practice.crossgen.logic.grid.Coordinate;
 import netcracker.practice.crossgen.logic.grid.StraightAngleTest;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import static org.junit.Assert.assertTrue;
 
-import java.util.HashMap;
+import java.util.*;
 import java.util.logging.Logger;
 
 public class DenseGeneratorTest {
@@ -54,7 +56,26 @@ public class DenseGeneratorTest {
         clues.put("ион", "...");
         clues.put("си", "...");
 
-        CanadianCrossword cross = new CanadianCrossword(9, 9);
+        HashSet<Coordinate> constraints = new HashSet<>();
+        constraints.add(new Coordinate(0, 1));
+        constraints.add(new Coordinate(0, 5));
+        constraints.add(new Coordinate(1, 4));
+        constraints.add(new Coordinate(1, 8));
+        constraints.add(new Coordinate(2, 5));
+        constraints.add(new Coordinate(3, 0));
+        constraints.add(new Coordinate(3, 7));
+        constraints.add(new Coordinate(4, 2));
+        constraints.add(new Coordinate(4, 4));
+        constraints.add(new Coordinate(4, 6));
+        constraints.add(new Coordinate(5, 1));
+        constraints.add(new Coordinate(5, 8));
+        constraints.add(new Coordinate(6, 4));
+        constraints.add(new Coordinate(7, 0));
+        constraints.add(new Coordinate(7, 5));
+        constraints.add(new Coordinate(8, 3));
+        constraints.add(new Coordinate(8, 7));
+
+        CanadianCrossword cross = new CanadianCrossword(9, 9, constraints);
         Angle angle = new AnglePicker().getAngle("straight");
         gen = new CanadianCrosswordGenerator(angle, cross, clues);
     }
@@ -82,23 +103,23 @@ public class DenseGeneratorTest {
         if (genCrossword == null)
             log.info("Solution not found");
         else {
-            log.info("Generated crossword:\n" + genCrossword.stringify());
+            log.info("Generated crossword:\n" + genCrossword.toString());
             log.info("Clues count: " + genCrossword.cluesCount());
         }
     }
 
     @Test
     public void testSeveralGenerations() {
-        CanadianCrossword genCrossword = (CanadianCrossword) gen.generate();
         int bestCount = 0;
 
         for (int i = 0; i < 10; i++) {
-            genCrossword = (CanadianCrossword) gen.generate();
+            CanadianCrossword genCrossword = (CanadianCrossword) gen.generate();
             if (genCrossword == null)
                 log.info("Solution not found");
             else {
                 int cluesCount = genCrossword.cluesCount();
                 log.info("Clues count: " + cluesCount);
+                assertTrue(bestCount >= cluesCount);
                 if (cluesCount > bestCount) bestCount = cluesCount;
             }
         }

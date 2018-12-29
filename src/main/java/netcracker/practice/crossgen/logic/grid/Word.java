@@ -7,6 +7,7 @@ public interface Word {
     int getRow();
     Direction getDirection();
     int getLength();
+    String getString();
     boolean isOrthogonal(Word word);
 
 }

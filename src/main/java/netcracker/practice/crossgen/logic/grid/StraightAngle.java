@@ -55,7 +55,7 @@ public class StraightAngle implements Angle {
 
         for (int row = 0, length = 1; row < grid.getHeight(); row++)
             for (int col = 0, width = grid.getWidth(); col < width; col++) {
-                if (grid.getSymbol(row, col) == Settings.PROHIBITED_SYMBOL || col == width - 1) {
+                if (grid.getSymbol(row, col) == Settings.CONSTRAINED_SYMBOL || col == width - 1) {
                     if (length > 1)
                         gridWords.add(new GridWord(row, col - length + 1, Direction.HORIZONTAL, length));
                     length = 1;
@@ -66,7 +66,7 @@ public class StraightAngle implements Angle {
 
         for (int col = 0, length = 1; col < grid.getWidth(); col++)
             for (int row = 0, height = grid.getHeight(); row < height; row++) {
-                if (grid.getSymbol(row, col) == Settings.PROHIBITED_SYMBOL || row == height - 1) {
+                if (grid.getSymbol(row, col) == Settings.CONSTRAINED_SYMBOL || row == height - 1) {
                     if (length > 1)
                         gridWords.add(new GridWord(row - length + 1, col, Direction.VERTICAL, length));
                     length = 1;
@@ -96,61 +96,55 @@ public class StraightAngle implements Angle {
     }
 
     @Override
-    public void placeStringInGrid(String s, Word word, Grid grid) {
+    public void putWordInGrid(Word word, MutableGrid grid) {
         switch (word.getDirection()) {
             case HORIZONTAL:
-                for (int i = 0, row = word.getRow(), col = word.getCol(); i <  s.length(); i++) {
-                    grid.setSymbol(row, i + col, s.charAt(i));
+                for (int i = 0, row = word.getRow(), col = word.getCol(); i <  word.getLength(); i++) {
+                    grid.setSymbol(row, i + col, word.getString().charAt(i));
                 }
                 break;
             case VERTICAL:
-                for (int i = 0, row = word.getRow(), col = word.getCol(); i <  s.length(); i++) {
-                    grid.setSymbol(i + row, col, s.charAt(i));
+                for (int i = 0, row = word.getRow(), col = word.getCol(); i <  word.getLength(); i++) {
+                    grid.setSymbol(i + row, col, word.getString().charAt(i));
                 }
                 break;
         }
     }
 
     @Override
-    public void placeWordInGrid(String s, Word word, Grid grid) {
-        placeStringInGrid(s, word, grid);
-        setProhibitedBorders(word, grid);
-    }
-
-    @Override
-    public void setProhibitedBorders(Word word, Grid grid) {
+    public void setConstrainedBorders(Word word, MutableGrid grid) {
         switch (word.getDirection()) {
             case HORIZONTAL:
                 if (word.getCol() > 0)
-                    grid.setSymbol(word.getRow(), word.getCol() - 1, Settings.PROHIBITED_SYMBOL);
+                    grid.setSymbol(word.getRow(), word.getCol() - 1, Settings.CONSTRAINED_SYMBOL);
                 if (word.getCol() + word.getLength() < grid.getWidth())
-                    grid.setSymbol(word.getRow(), word.getCol() + word.getLength(), Settings.PROHIBITED_SYMBOL);
+                    grid.setSymbol(word.getRow(), word.getCol() + word.getLength(), Settings.CONSTRAINED_SYMBOL);
                 break;
             case VERTICAL:
                 if (word.getRow() > 0)
-                    grid.setSymbol(word.getRow() - 1, word.getCol(), Settings.PROHIBITED_SYMBOL);
+                    grid.setSymbol(word.getRow() - 1, word.getCol(), Settings.CONSTRAINED_SYMBOL);
                 if (word.getRow() + word.getLength() < grid.getHeight())
-                    grid.setSymbol(word.getRow() + word.getLength(), word.getCol(), Settings.PROHIBITED_SYMBOL);
+                    grid.setSymbol(word.getRow() + word.getLength(), word.getCol(), Settings.CONSTRAINED_SYMBOL);
                 break;
         }
     }
 
     @Override
-    public boolean wordConflictsGrid(String s, Word word, Grid grid) {
+    public boolean wordConflictsGrid(Word word, MutableGrid grid) {
         int col = word.getCol(), row = word.getRow(), length = word.getLength();
         switch (word.getDirection()) {
             case HORIZONTAL:
                 int endCol = col + length - 1;
                 if ((col > 0 && !(
                         grid.getSymbol(row, col - 1) == Settings.EMPTY_SYMBOL ||
-                        grid.getSymbol(row, col - 1) == Settings.PROHIBITED_SYMBOL)) ||
+                        grid.getSymbol(row, col - 1) == Settings.CONSTRAINED_SYMBOL)) ||
                         (endCol < grid.getWidth() - 1 && !(
                         grid.getSymbol(row, endCol + 1) == Settings.EMPTY_SYMBOL ||
-                        grid.getSymbol(row, endCol + 1) == Settings.PROHIBITED_SYMBOL)))
+                        grid.getSymbol(row, endCol + 1) == Settings.CONSTRAINED_SYMBOL)))
                     return true;
                 for (int i = col; i <= endCol; i++) {
                     char gridSymbol = grid.getSymbol(row, i);
-                    if (!(gridSymbol == Settings.EMPTY_SYMBOL || s.charAt(i - col) == gridSymbol))
+                    if (!(gridSymbol == Settings.EMPTY_SYMBOL || word.getString().charAt(i - col) == gridSymbol))
                         return true;
                 }
                 break;
@@ -158,14 +152,14 @@ public class StraightAngle implements Angle {
                 int endRow = row + length - 1;
                 if ((row > 0 && !(
                         grid.getSymbol(row - 1, col) == Settings.EMPTY_SYMBOL ||
-                        grid.getSymbol(row - 1, col) == Settings.PROHIBITED_SYMBOL)) ||
+                        grid.getSymbol(row - 1, col) == Settings.CONSTRAINED_SYMBOL)) ||
                         (endRow < grid.getHeight() - 1 && !(
                         grid.getSymbol(endRow + 1, col) == Settings.EMPTY_SYMBOL ||
-                        grid.getSymbol(endRow + 1, col) == Settings.PROHIBITED_SYMBOL)))
+                        grid.getSymbol(endRow + 1, col) == Settings.CONSTRAINED_SYMBOL)))
                     return true;
                 for (int i = row; i <= endRow; i++) {
                     char gridSymbol = grid.getSymbol(i, col);
-                    if (!(gridSymbol == Settings.EMPTY_SYMBOL || s.charAt(i - row) == gridSymbol))
+                    if (!(gridSymbol == Settings.EMPTY_SYMBOL || word.getString().charAt(i - row) == gridSymbol))
                         return true;
                 }
                 break;
