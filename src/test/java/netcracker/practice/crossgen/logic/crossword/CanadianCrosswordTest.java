@@ -4,8 +4,9 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import netcracker.practice.crossgen.logic.grid.Grid;
-import netcracker.practice.crossgen.logic.grid.Direction;
+import netcracker.practice.crossgen.logic.word.Direction;
 
+import netcracker.practice.crossgen.logic.word.Clue;
 import org.junit.Test;
 
 public class CanadianCrosswordTest

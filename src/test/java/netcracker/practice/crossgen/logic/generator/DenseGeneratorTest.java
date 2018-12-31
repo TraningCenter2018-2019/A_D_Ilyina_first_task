@@ -1,8 +1,8 @@
 package netcracker.practice.crossgen.logic.generator;
 
 import netcracker.practice.crossgen.logic.crossword.CanadianCrossword;
-import netcracker.practice.crossgen.logic.grid.Angle;
-import netcracker.practice.crossgen.logic.grid.AnglePicker;
+import netcracker.practice.crossgen.logic.angle.Angle;
+import netcracker.practice.crossgen.logic.angle.AnglePicker;
 import netcracker.practice.crossgen.logic.grid.Coordinate;
 import netcracker.practice.crossgen.logic.grid.StraightAngleTest;
 import org.junit.After;

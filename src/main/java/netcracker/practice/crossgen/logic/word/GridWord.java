@@ -1,6 +1,7 @@
-package netcracker.practice.crossgen.logic.grid;
+package netcracker.practice.crossgen.logic.word;
 
 import netcracker.practice.crossgen.Settings;
+import netcracker.practice.crossgen.logic.angle.Angle;
 
 import java.util.Arrays;
 import java.util.Objects;

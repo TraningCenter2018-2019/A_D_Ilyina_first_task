@@ -1,6 +1,8 @@
 package netcracker.practice.crossgen.logic.generator;
 
 import netcracker.practice.crossgen.Settings;
+import netcracker.practice.crossgen.logic.angle.Angle;
+import netcracker.practice.crossgen.logic.angle.AnglePicker;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

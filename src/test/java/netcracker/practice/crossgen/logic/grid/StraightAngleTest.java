@@ -1,7 +1,12 @@
 package netcracker.practice.crossgen.logic.grid;
 
 import netcracker.practice.crossgen.Settings;
-import netcracker.practice.crossgen.logic.crossword.Clue;
+import netcracker.practice.crossgen.logic.angle.Angle;
+import netcracker.practice.crossgen.logic.angle.StraightAngle;
+import netcracker.practice.crossgen.logic.word.Clue;
+import netcracker.practice.crossgen.logic.word.Direction;
+import netcracker.practice.crossgen.logic.word.GridWord;
+import netcracker.practice.crossgen.logic.word.Word;
 import org.junit.Test;
 
 import netcracker.practice.crossgen.logic.crossword.CanadianCrossword;

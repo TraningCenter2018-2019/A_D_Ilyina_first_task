@@ -1,6 +1,10 @@
-package netcracker.practice.crossgen.logic.grid;
+package netcracker.practice.crossgen.logic.angle;
 
 import netcracker.practice.crossgen.Settings;
+import netcracker.practice.crossgen.logic.grid.*;
+import netcracker.practice.crossgen.logic.word.Direction;
+import netcracker.practice.crossgen.logic.word.GridWord;
+import netcracker.practice.crossgen.logic.word.Word;
 
 import java.util.*;
 

@@ -4,10 +4,10 @@ import java.util.*;
 
 import netcracker.practice.crossgen.Settings;
 import netcracker.practice.crossgen.logic.crossword.CanadianCrossword;
-import netcracker.practice.crossgen.logic.crossword.Clue;
-import netcracker.practice.crossgen.logic.grid.Angle;
+import netcracker.practice.crossgen.logic.word.Clue;
+import netcracker.practice.crossgen.logic.angle.Angle;
 import netcracker.practice.crossgen.logic.grid.Grid;
-import netcracker.practice.crossgen.logic.grid.Word;
+import netcracker.practice.crossgen.logic.word.Word;
 
 class CanadianCrosswordGenerator implements Generator {
 

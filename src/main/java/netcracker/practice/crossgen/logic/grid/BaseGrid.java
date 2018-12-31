@@ -1,26 +1,24 @@
 package netcracker.practice.crossgen.logic.grid;
 
-import netcracker.practice.crossgen.Settings;
-
 import java.util.Objects;
 import java.util.Set;
+import java.util.HashSet;
 
-public class BaseGrid implements Grid {
+public abstract class BaseGrid implements Grid {
 
     private final int height;
     private final int width;
-    private final Set<Coordinate> constraints;
+    private final Set<Coordinate> constraints = new HashSet<>();
 
     protected BaseGrid(int height, int width) {
         this.height = height;
         this.width = width;
-        this.constraints = null;
     }
 
     protected BaseGrid(int height, int width, Set<Coordinate> constraints) {
         this.height = height;
         this.width = width;
-        this.constraints = constraints;
+        constraints.addAll(constraints);
     }
 
     @Override
@@ -39,13 +37,6 @@ public class BaseGrid implements Grid {
     }
 
     @Override
-    public char getSymbol(int row, int col) {
-        return constraints.contains(new Coordinate(row, col)) ?
-                Settings.CONSTRAINED_SYMBOL :
-                Settings.EMPTY_SYMBOL;
-    }
-
-    @Override
     public boolean equals(Object o) {
         if (o == this) return true;
         if (!(o instanceof BaseGrid)) return false;
@@ -58,11 +49,6 @@ public class BaseGrid implements Grid {
     @Override
     public int hashCode() {
         return Objects.hash(height, width, constraints);
-    }
-
-    @Override
-    public String toString() {
-        return (new CharGrid(this)).toString();
     }
 
 }

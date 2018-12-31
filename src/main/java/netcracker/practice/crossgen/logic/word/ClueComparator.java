@@ -1,8 +1,8 @@
-package netcracker.practice.crossgen.logic.crossword;
+package netcracker.practice.crossgen.logic.word;
 
 import java.util.Comparator;
 
-class ClueComparator implements Comparator<Clue> {
+public class ClueComparator implements Comparator<Clue> {
 
     public int compare(Clue clue1, Clue clue2) {
         int result;

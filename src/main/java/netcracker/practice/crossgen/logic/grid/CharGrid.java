@@ -1,6 +1,7 @@
 package netcracker.practice.crossgen.logic.grid;
 
 import netcracker.practice.crossgen.Settings;
+import netcracker.practice.crossgen.logic.word.Word;
 
 import java.util.Arrays;
 import java.util.Set;
@@ -16,6 +17,7 @@ public class CharGrid implements MutableGrid {
         clear();
     }
 
+    /*
     public CharGrid(int height, int width) {
         this.grid = new BaseGrid(height, width);
         this.symbols = new char[grid.getHeight()][grid.getWidth()];
@@ -26,7 +28,7 @@ public class CharGrid implements MutableGrid {
         this.grid = new BaseGrid(height, width, constraints);
         this.symbols = new char[grid.getHeight()][grid.getWidth()];
         clear();
-    }
+    }*/
 
     public void clear() {
         for (char[] row : symbols)

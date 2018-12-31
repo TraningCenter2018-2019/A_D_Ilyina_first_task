@@ -1,4 +1,4 @@
-package netcracker.practice.crossgen.logic.grid;
+package netcracker.practice.crossgen.logic.angle;
 
 public class AnglePicker {
 

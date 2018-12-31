@@ -5,6 +5,8 @@ import java.util.*;
 import netcracker.practice.crossgen.logic.grid.BaseGrid;
 import netcracker.practice.crossgen.logic.grid.CharGrid;
 import netcracker.practice.crossgen.logic.grid.Coordinate;
+import netcracker.practice.crossgen.logic.word.Clue;
+import netcracker.practice.crossgen.logic.word.ClueComparator;
 
 public class CanadianCrossword extends BaseGrid {
 

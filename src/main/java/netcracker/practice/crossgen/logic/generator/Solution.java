@@ -1,7 +1,7 @@
 package netcracker.practice.crossgen.logic.generator;
 
 import netcracker.practice.crossgen.logic.crossword.CanadianCrossword;
-import netcracker.practice.crossgen.logic.crossword.Clue;
+import netcracker.practice.crossgen.logic.word.Clue;
 import netcracker.practice.crossgen.logic.grid.CharGrid;
 
 import java.util.Objects;

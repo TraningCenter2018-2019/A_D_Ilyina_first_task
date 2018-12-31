@@ -1,5 +1,8 @@
 package netcracker.practice.crossgen.logic.grid;
 
+import netcracker.practice.crossgen.logic.angle.Angle;
+import netcracker.practice.crossgen.logic.angle.DiagonalAngle;
+import netcracker.practice.crossgen.logic.word.Word;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -8,7 +11,6 @@ import static org.junit.Assert.assertTrue;
 import netcracker.practice.crossgen.logic.crossword.CanadianCrossword;
 
 import java.util.List;
-import java.util.Map;
 
 public class DiagonalAngleTest {
 

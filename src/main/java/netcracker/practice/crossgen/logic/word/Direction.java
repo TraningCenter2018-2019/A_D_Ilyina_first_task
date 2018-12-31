@@ -1,4 +1,8 @@
-package netcracker.practice.crossgen.logic.grid;
+package netcracker.practice.crossgen.logic.word;
+
+import netcracker.practice.crossgen.logic.angle.Angle;
+import netcracker.practice.crossgen.logic.angle.DiagonalAngle;
+import netcracker.practice.crossgen.logic.angle.StraightAngle;
 
 public enum Direction {
     HORIZONTAL("Across"),

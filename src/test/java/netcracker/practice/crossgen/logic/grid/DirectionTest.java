@@ -1,5 +1,6 @@
 package netcracker.practice.crossgen.logic.grid;
 
+import netcracker.practice.crossgen.logic.word.Direction;
 import org.junit.Test;
 
 import static org.junit.Assert.assertFalse;

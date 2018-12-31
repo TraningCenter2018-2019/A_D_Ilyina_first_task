@@ -1,5 +1,9 @@
 package netcracker.practice.crossgen.logic.grid;
 
+import netcracker.practice.crossgen.logic.angle.Angle;
+import netcracker.practice.crossgen.logic.angle.AnglePicker;
+import netcracker.practice.crossgen.logic.angle.DiagonalAngle;
+import netcracker.practice.crossgen.logic.angle.StraightAngle;
 import org.junit.Test;
 
 import static org.junit.Assert.assertTrue;
