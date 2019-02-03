@@ -9,6 +9,36 @@ import netcracker.practice.crossgen.logic.word.Word;
 import java.util.*;
 
 public class StraightAngle implements Angle {
+    @Override
+    public Set<Coordinate> getCoordinates(Word word) {
+        HashSet<Coordinate> coordinates = new HashSet<>();
+        final int col = word.getCol(), row = word.getRow(), length = word.getLength();
+        switch (word.getDirection()) {
+            case HORIZONTAL:
+                final int endCol = col + length - 1;
+                for (int c = col; c < endCol; c++)
+                    coordinates.add(new Coordinate(row, c));
+                break;
+            case VERTICAL:
+                final int endRow = row + length - 1;
+                for (int r = row; r < endRow; r++)
+                    coordinates.add(new Coordinate(r, col));
+                break;
+        }
+        return coordinates;
+    }
+
+    @Override
+    public int getEndCol(Word word) {
+        return word.getDirection() == Direction.VERTICAL ?
+                word.getCol() : word.getCol() + word.getLength() - 1;
+    }
+
+    @Override
+    public int getEndRow(Word word) {
+        return word.getDirection() == Direction.HORIZONTAL ?
+                word.getRow() : word.getRow() + word.getLength() - 1;
+    }
 
     @Override
     public int getIntersectingWordCol(Word intersectedWord, int position1, int position2) {
@@ -135,10 +165,10 @@ public class StraightAngle implements Angle {
 
     @Override
     public boolean wordConflictsGrid(Word word, MutableGrid grid) {
-        int col = word.getCol(), row = word.getRow(), length = word.getLength();
+        final int col = word.getCol(), row = word.getRow(), length = word.getLength();
         switch (word.getDirection()) {
             case HORIZONTAL:
-                int endCol = col + length - 1;
+                final int endCol = col + length - 1;
                 if ((col > 0 && !(
                         grid.getSymbol(row, col - 1) == Settings.EMPTY_SYMBOL ||
                         grid.getSymbol(row, col - 1) == Settings.CONSTRAINED_SYMBOL)) ||
@@ -153,7 +183,7 @@ public class StraightAngle implements Angle {
                 }
                 break;
             case VERTICAL:
-                int endRow = row + length - 1;
+                final int endRow = row + length - 1;
                 if ((row > 0 && !(
                         grid.getSymbol(row - 1, col) == Settings.EMPTY_SYMBOL ||
                         grid.getSymbol(row - 1, col) == Settings.CONSTRAINED_SYMBOL)) ||

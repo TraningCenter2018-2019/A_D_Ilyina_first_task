@@ -19,6 +19,10 @@ public class Coordinate {
         return row;
     }
 
+    public boolean isWithinBounds(int height, int width) {
+        return col >= 0 && col < height && row >= 0 && row < width;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (o == this) return true;

@@ -12,14 +12,6 @@ import org.junit.Test;
 public class CanadianCrosswordTest
 {
     @Test
-    public void testGrid() {
-        Grid grid = new CanadianCrossword(10, 20);
-
-        assertEquals(10, grid.getWidth());
-        assertEquals(20, grid.getHeight());
-    }
-
-    @Test
     public void testClues() {
         Clue clue1 = new Clue(0, 0, Direction.HORIZONTAL, "one", "...");
         clue1.setClueNumber(1);

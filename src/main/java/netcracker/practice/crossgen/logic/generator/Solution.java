@@ -1,6 +1,7 @@
 package netcracker.practice.crossgen.logic.generator;
 
 import netcracker.practice.crossgen.logic.crossword.CanadianCrossword;
+import netcracker.practice.crossgen.logic.grid.Grid;
 import netcracker.practice.crossgen.logic.word.Clue;
 import netcracker.practice.crossgen.logic.grid.CharGrid;
 
@@ -13,8 +14,8 @@ class Solution {
     private final CharGrid charGrid;
     private final Map<String, Clue> cluesInGrid = new HashMap<>();
 
-    public Solution(CanadianCrossword crossword) {
-        this.charGrid = new CharGrid(crossword);
+    public Solution(Grid grid) {
+        this.charGrid = new CharGrid(grid);
     }
 
     public void add(Clue clue) {
@@ -31,10 +32,6 @@ class Solution {
         return cluesInGrid.keySet().contains(word);
     }
 
-    public boolean contains(Clue clue) {
-        return cluesInGrid.keySet().contains(clue.getString());
-    }
-
     public boolean fitsWithinBounds(Clue clue) {
         return clue.getAngle().fitsWithinBounds(clue, charGrid);
     }
@@ -44,8 +41,7 @@ class Solution {
     }
 
     public CanadianCrossword toCrossword() {
-        CanadianCrossword crossword = (CanadianCrossword) charGrid.getGrid();
-        crossword.addAllClues(cluesInGrid.values());
+        CanadianCrossword crossword = new CanadianCrossword(cluesInGrid.values());
         crossword.setClueNumbers();
         return crossword;
     }

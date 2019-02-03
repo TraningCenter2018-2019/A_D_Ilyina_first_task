@@ -1,9 +1,7 @@
 package netcracker.practice.crossgen.logic.generator;
 
-import netcracker.practice.crossgen.logic.grid.Grid;
+import netcracker.practice.crossgen.logic.crossword.Crossword;
 
 public interface Generator {
-
-    Grid generate();
-
+    Crossword generate();
 }

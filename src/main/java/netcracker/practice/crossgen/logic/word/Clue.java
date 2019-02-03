@@ -28,8 +28,8 @@ public class Clue implements Word {
         return gridWord.getAngle();
     }
 
-    public char getCharAt(int position) {
-        return answer.charAt(position);
+    public String getClue() {
+        return clue;
     }
 
     public int getClueNumber() {
@@ -48,6 +48,16 @@ public class Clue implements Word {
     @Override
     public Direction getDirection() {
         return gridWord.getDirection();
+    }
+
+    @Override
+    public int getEndCol() {
+        return gridWord.getEndCol();
+    }
+
+    @Override
+    public int getEndRow() {
+        return gridWord.getEndRow();
     }
 
     @Override
@@ -76,7 +86,7 @@ public class Clue implements Word {
         if (!(o instanceof Clue)) return false;
 
         Clue clue = (Clue) o;
-        return answer == clue.answer && this.clue == clue.clue && gridWord.equals(clue.gridWord);
+        return answer.equals(clue.answer) && this.clue.equals(clue.clue) && gridWord.equals(clue.gridWord);
     }
 
     @Override

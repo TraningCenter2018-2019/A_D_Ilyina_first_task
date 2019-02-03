@@ -1,15 +1,14 @@
-package netcracker.practice.crossgen.logic.grid;
+package netcracker.practice.crossgen.logic.angle;
 
 import netcracker.practice.crossgen.Settings;
-import netcracker.practice.crossgen.logic.angle.Angle;
-import netcracker.practice.crossgen.logic.angle.StraightAngle;
+import netcracker.practice.crossgen.logic.grid.BaseGrid;
+import netcracker.practice.crossgen.logic.grid.CharGrid;
+import netcracker.practice.crossgen.logic.grid.MutableGrid;
 import netcracker.practice.crossgen.logic.word.Clue;
 import netcracker.practice.crossgen.logic.word.Direction;
 import netcracker.practice.crossgen.logic.word.GridWord;
 import netcracker.practice.crossgen.logic.word.Word;
 import org.junit.Test;
-
-import netcracker.practice.crossgen.logic.crossword.CanadianCrossword;
 
 import java.util.List;
 import java.util.logging.Logger;
@@ -52,7 +51,7 @@ public class StraightAngleTest {
 
     @Test
     public void testGetRandomWord() {
-        Grid grid = new CanadianCrossword(4, 4);
+        BaseGrid grid = new BaseGrid(4, 4);
         Angle angle = new StraightAngle();
 
         Word randomWord1 = angle.getRandomWord(grid, 4);
@@ -64,7 +63,7 @@ public class StraightAngleTest {
 
     @Test
     public void testFindGridWords() {
-        Grid grid = new CanadianCrossword(4, 5);
+        BaseGrid grid = new BaseGrid(4, 5);
         Angle angle = new StraightAngle();
         List<Word> gridWords = angle.findGridWords(grid);
 
@@ -78,7 +77,7 @@ public class StraightAngleTest {
     @Test
     public void testFitsWithinBounds() {
         Angle angle = new StraightAngle();
-        Grid grid = new CanadianCrossword(3, 2);
+        BaseGrid grid = new BaseGrid(3, 2);
         Word word1 = new GridWord(0, 2, Direction.VERTICAL, 3);
         Word word2 = new GridWord(2, 1, Direction.VERTICAL, 3);
         Word word3 = new GridWord(0, 0, Direction.HORIZONTAL, 2);
@@ -92,8 +91,8 @@ public class StraightAngleTest {
 
     @Test
     public void testPutWordInGrid() {
-        Grid cross = new CanadianCrossword(5, 5);
-        MutableGrid grid = new CharGrid(cross);
+        BaseGrid baseGrid = new BaseGrid(5, 5);
+        MutableGrid grid = new CharGrid(baseGrid);
         Word word = new Clue(1, 1, Direction.HORIZONTAL, "yes", null);
         Angle angle = new StraightAngle();
 
@@ -107,8 +106,8 @@ public class StraightAngleTest {
 
     @Test
     public void testSetProhibitedBorders() {
-        Grid cross = new CanadianCrossword(5, 5);
-        MutableGrid grid = new CharGrid(cross);
+        BaseGrid baseGrid = new BaseGrid(5, 5);
+        MutableGrid grid = new CharGrid(baseGrid);
         Angle angle = new StraightAngle();
         log.info("Initial grid:\n" + grid.toString());
 
@@ -126,8 +125,8 @@ public class StraightAngleTest {
 
     @Test
     public void testWordConflictsGrid() {
-        Grid cross = new CanadianCrossword(3, 3);
-        MutableGrid grid = new CharGrid(cross);
+        BaseGrid baseGrid = new BaseGrid(3, 3);
+        MutableGrid grid = new CharGrid(baseGrid);
         grid.setSymbol(0, 0, Settings.CONSTRAINED_SYMBOL);
         grid.setSymbol(0, 2, Settings.CONSTRAINED_SYMBOL);
         grid.setSymbol(2, 0, Settings.CONSTRAINED_SYMBOL);

@@ -1,24 +1,30 @@
 package netcracker.practice.crossgen.logic.grid;
 
+import netcracker.practice.crossgen.Settings;
+
 import java.util.Objects;
 import java.util.Set;
 import java.util.HashSet;
 
-public abstract class BaseGrid implements Grid {
+public class BaseGrid implements Grid {
 
     private final int height;
     private final int width;
     private final Set<Coordinate> constraints = new HashSet<>();
 
-    protected BaseGrid(int height, int width) {
+    public BaseGrid(int height, int width) {
         this.height = height;
         this.width = width;
     }
 
-    protected BaseGrid(int height, int width, Set<Coordinate> constraints) {
+    public BaseGrid(int height, int width, Set<Coordinate> constraints) {
         this.height = height;
         this.width = width;
-        constraints.addAll(constraints);
+        for (Coordinate constraint : constraints) {
+            if (!constraint.isWithinBounds(height, width))
+                throw new IllegalArgumentException("Coordinate is not within the grid");
+            this.constraints.add(constraint);
+        }
     }
 
     @Override
@@ -37,6 +43,19 @@ public abstract class BaseGrid implements Grid {
     }
 
     @Override
+    public char getSymbol(int row, int col) {
+        if (row < 0 || row >= height || col < 0 || col > width)
+            throw new IllegalArgumentException("Symbol coordinates must be inside the grid.");
+        Coordinate c = new Coordinate(row, col);
+        return constraints.contains(c) ? Settings.CONSTRAINED_SYMBOL : Settings.EMPTY_SYMBOL;
+    }
+
+    @Override
+    public char[][] toCharMatrix() {
+        return new CharGrid(this).toCharMatrix();
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (o == this) return true;
         if (!(o instanceof BaseGrid)) return false;
@@ -50,5 +69,4 @@ public abstract class BaseGrid implements Grid {
     public int hashCode() {
         return Objects.hash(height, width, constraints);
     }
-
 }

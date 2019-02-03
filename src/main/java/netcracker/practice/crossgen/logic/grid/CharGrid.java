@@ -17,19 +17,6 @@ public class CharGrid implements MutableGrid {
         clear();
     }
 
-    /*
-    public CharGrid(int height, int width) {
-        this.grid = new BaseGrid(height, width);
-        this.symbols = new char[grid.getHeight()][grid.getWidth()];
-        clear();
-    }
-
-    public CharGrid(int height, int width, Set<Coordinate> constraints) {
-        this.grid = new BaseGrid(height, width, constraints);
-        this.symbols = new char[grid.getHeight()][grid.getWidth()];
-        clear();
-    }*/
-
     public void clear() {
         for (char[] row : symbols)
             Arrays.fill(row, Settings.EMPTY_SYMBOL);
@@ -45,10 +32,6 @@ public class CharGrid implements MutableGrid {
         return grid.getConstraints();
     }
 
-    public Grid getGrid() {
-        return grid;
-    }
-
     @Override
     public int getHeight() {
         return symbols.length;
@@ -61,16 +44,15 @@ public class CharGrid implements MutableGrid {
 
     @Override
     public char getSymbol(int row, int col) {
+        if (row < 0 || row >= getHeight() || col < 0 || col > getWidth())
+            throw new IllegalArgumentException("Symbol coordinates must be inside the grid.");
         return symbols[row][col];
-    }
-
-    public void fillWithConstraints() {
-        for (char[] row : symbols)
-            Arrays.fill(row, Settings.CONSTRAINED_SYMBOL);
     }
 
     @Override
     public void setSymbol(int row, int col, char symbol) {
+        if (row < 0 || row >= getHeight() || col < 0 || col > getWidth())
+            throw new IllegalArgumentException("Symbol coordinates must be inside the grid.");
         symbols[row][col] = symbol;
     }
 
@@ -82,6 +64,11 @@ public class CharGrid implements MutableGrid {
     @Override
     public void setConstrainedBorders(Word word) {
         word.getAngle().setConstrainedBorders(word, this);
+    }
+
+    @Override
+    public char[][] toCharMatrix() {
+        return symbols.clone();
     }
 
     @Override

@@ -36,6 +36,16 @@ public class GridWord implements Word {
     }
 
     @Override
+    public int getEndCol() {
+        return getAngle().getEndCol(this);
+    }
+
+    @Override
+    public int getEndRow() {
+        return getAngle().getEndRow(this);
+    }
+
+    @Override
     public int getLength() {
         return this.length;
     }

@@ -5,10 +5,10 @@ import netcracker.practice.crossgen.logic.angle.DiagonalAngle;
 import netcracker.practice.crossgen.logic.angle.StraightAngle;
 
 public enum Direction {
-    HORIZONTAL("Across"),
-    VERTICAL("Down"),
-    DIAGONAL("Diagonal"),
-    ANTI_DIAGONAL("Anti-diagonal");
+    HORIZONTAL("По горизонтали"),
+    VERTICAL("По вертикали"),
+    DIAGONAL("По главной диагонали"),
+    ANTI_DIAGONAL("По побочной диагонали");
 
     final String name;
 

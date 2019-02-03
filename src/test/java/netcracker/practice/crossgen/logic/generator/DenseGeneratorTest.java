@@ -3,10 +3,12 @@ package netcracker.practice.crossgen.logic.generator;
 import netcracker.practice.crossgen.logic.crossword.CanadianCrossword;
 import netcracker.practice.crossgen.logic.angle.Angle;
 import netcracker.practice.crossgen.logic.angle.AnglePicker;
+import netcracker.practice.crossgen.logic.grid.BaseGrid;
 import netcracker.practice.crossgen.logic.grid.Coordinate;
-import netcracker.practice.crossgen.logic.grid.StraightAngleTest;
+import netcracker.practice.crossgen.logic.angle.StraightAngleTest;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import static org.junit.Assert.assertTrue;
 
@@ -17,9 +19,7 @@ public class DenseGeneratorTest {
 
     private final Logger log = Logger.getLogger(StraightAngleTest.class.getName());
 
-    CanadianCrossword cross;
     CanadianCrosswordGenerator gen;
-
     long startTime;
 
     @Before
@@ -75,9 +75,9 @@ public class DenseGeneratorTest {
         constraints.add(new Coordinate(8, 3));
         constraints.add(new Coordinate(8, 7));
 
-        CanadianCrossword cross = new CanadianCrossword(9, 9, constraints);
+        BaseGrid grid = new BaseGrid(9, 9, constraints);
         Angle angle = new AnglePicker().getAngle("straight");
-        gen = new CanadianCrosswordGenerator(angle, cross, clues);
+        gen = new CanadianCrosswordGenerator(angle, grid, clues);
     }
 
     @Before
@@ -88,7 +88,6 @@ public class DenseGeneratorTest {
     @After
     public void cleanup() {
         gen = null;
-        cross = null;
     }
 
     @After
@@ -98,7 +97,7 @@ public class DenseGeneratorTest {
 
     @Test
     public void testSingleGeneration() {
-        CanadianCrossword genCrossword = (CanadianCrossword) gen.generate();
+        CanadianCrossword genCrossword = gen.generate();
 
         if (genCrossword == null)
             log.info("Solution not found");
@@ -109,11 +108,12 @@ public class DenseGeneratorTest {
     }
 
     @Test
+    @Ignore("Test takes 10s to run")
     public void testSeveralGenerations() {
         int bestCount = 0;
 
         for (int i = 0; i < 10; i++) {
-            CanadianCrossword genCrossword = (CanadianCrossword) gen.generate();
+            CanadianCrossword genCrossword = gen.generate();
             if (genCrossword == null)
                 log.info("Solution not found");
             else {

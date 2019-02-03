@@ -4,16 +4,16 @@ import java.util.*;
 
 import netcracker.practice.crossgen.Settings;
 import netcracker.practice.crossgen.logic.crossword.CanadianCrossword;
+import netcracker.practice.crossgen.logic.grid.Grid;
 import netcracker.practice.crossgen.logic.word.Clue;
 import netcracker.practice.crossgen.logic.angle.Angle;
-import netcracker.practice.crossgen.logic.grid.Grid;
 import netcracker.practice.crossgen.logic.word.Word;
 
-class CanadianCrosswordGenerator implements Generator {
+public class CanadianCrosswordGenerator implements Generator {
 
     private final Angle angle;
     private final Map<String, String> clues;
-    private final CanadianCrossword crossword;
+    private final Grid grid;
 
     private final Map<String, List<Intersection>> wordIntersections = new HashMap<>();
 
@@ -22,11 +22,7 @@ class CanadianCrosswordGenerator implements Generator {
     public CanadianCrosswordGenerator(Angle angle, Grid grid, Map<String, String> clues) {
         this.angle = angle;
         this.clues = clues;
-
-        if (grid instanceof CanadianCrossword)
-            this.crossword = (CanadianCrossword) grid;
-        else
-            this.crossword = new CanadianCrossword(grid.getHeight(), grid.getWidth(), grid.getConstraints());
+        this.grid = grid;
 
         computeWordIntersections();
     }
@@ -45,8 +41,7 @@ class CanadianCrosswordGenerator implements Generator {
     }
 
     @Override
-    public Grid generate() {
-        crossword.clear();
+    public CanadianCrossword generate() {
         long startTime = System.currentTimeMillis();
 
         while (System.currentTimeMillis() - startTime < Settings.GENERATION_TIMEOUT) {
@@ -66,11 +61,12 @@ class CanadianCrosswordGenerator implements Generator {
                 }
         }
 
-        return pickRandomSolution().toCrossword();
+        Solution solution = pickRandomSolution();
+        return solution == null ? null : solution.toCrossword();
     }
 
     public Solution generateSolution() {
-        Solution solution = new Solution(crossword);
+        Solution solution = new Solution(grid);
         LinkedList<Clue> potentialClues = new LinkedList<>();
         potentialClues.add(pickRandomFirstClue());
 
@@ -107,11 +103,10 @@ class CanadianCrosswordGenerator implements Generator {
         Collections.shuffle(wordList);
         Map.Entry<String, String> firstEntry = wordList.get(0);
 
-        Word word = angle.getRandomWord(crossword, firstEntry.getKey().length());
-        Clue firstClue = new Clue(word.getRow(), word.getCol(), word.getDirection(),
-                firstEntry.getKey(), firstEntry.getValue());
+        Word word = angle.getRandomWord(grid, firstEntry.getKey().length());
 
-        return firstClue;
+        return new Clue(word.getRow(), word.getCol(), word.getDirection(),
+                firstEntry.getKey(), firstEntry.getValue());
     }
 
     public Solution pickRandomSolution() {

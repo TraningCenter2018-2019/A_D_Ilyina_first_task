@@ -8,6 +8,7 @@ public interface Grid {
     int getHeight();
     int getWidth();
     char getSymbol(int row, int col);
+    char[][] toCharMatrix();
     String toString();
 
 }
