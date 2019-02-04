@@ -3,10 +3,11 @@ jdk:
 - oraclejdk8
 install:
   - mvn clean install
-after_success:
-  - mvn sonar:sonar \
-  -Dsonar.projectKey=TraningCenter2018-2019_A_D_Ilyina_first_task \
-  -Dsonar.organization=traningcenter2018-2019 \
-  -Dsonar.host.url=https://sonarcloud.io \
-  -Dsonar.login=26805db72443041e902983c470e0f90c2aeae219 
-
+addons:
+  sonarcloud:
+    organization: "traningcenter2018-2019" # the key of the org you chose at step #3
+    token:
+      secure: A_D_Ilyina_first_task": 26805db72443041e902983c470e0f90c2aeae219 # encrypted value of your token
+script:
+  # the following command line builds the project, runs the tests with coverage and then execute the SonarCloud analysis
+  - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar
