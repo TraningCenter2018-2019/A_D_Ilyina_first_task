@@ -4,7 +4,7 @@ install: true
 
 addons:
   sonarcloud:
-    organization: "TraningCenter2018-2019_A_D_Ilyina_first_task"
+    organization: "traningcenter2018-2019"   
     token:
       secure: "26805db72443041e902983c470e0f90c2aeae219"
 
@@ -13,7 +13,7 @@ jdk:
 
 script:
   # JaCoCo is used to have code coverage, the agent has to be activated
-  - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent package sonar:sonar
+  - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent package sonar:sonar -Dsonar.projectKey=TraningCenter2018-2019_A_D_Ilyina_first_task
 
 cache:
   directories:
