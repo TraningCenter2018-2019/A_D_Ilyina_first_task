@@ -3,7 +3,6 @@ package netcracker.practice.crossgen.logic.crossword;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-import netcracker.practice.crossgen.logic.grid.Grid;
 import netcracker.practice.crossgen.logic.word.Direction;
 
 import netcracker.practice.crossgen.logic.word.Clue;

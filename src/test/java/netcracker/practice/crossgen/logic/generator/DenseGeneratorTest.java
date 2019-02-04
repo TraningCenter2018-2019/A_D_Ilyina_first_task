@@ -13,11 +13,13 @@ import org.junit.Test;
 import static org.junit.Assert.assertTrue;
 
 import java.util.*;
-import java.util.logging.Logger;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class DenseGeneratorTest {
 
-    private final Logger log = Logger.getLogger(StraightAngleTest.class.getName());
+    private final Logger log = LoggerFactory.getLogger(StraightAngleTest.class.getName());
 
     CanadianCrosswordGenerator gen;
     long startTime;
