@@ -1,0 +1,10 @@
+language: java
+jdk: 
+- oraclejdk8
+install:
+  - mvn clean install
+  - mvn sonar:sonar \
+  -Dsonar.projectKey=TraningCenter2018-2019_A_D_Ilyina_first_task \
+  -Dsonar.organization=traningcenter2018-2019 \
+  -Dsonar.host.url=https://sonarcloud.io \
+  -Dsonar.login=26805db72443041e902983c470e0f90c2aeae219
