@@ -4,7 +4,7 @@ install: true
 
 addons:
   sonarcloud:
-    organization: "traningcenter2018-2019"
+    organization: "TraningCenter2018-2019_A_D_Ilyina_first_task"
     token:
       secure: "26805db72443041e902983c470e0f90c2aeae219"
 
