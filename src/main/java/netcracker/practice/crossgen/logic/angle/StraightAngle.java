@@ -16,12 +16,12 @@ public class StraightAngle implements Angle {
         switch (word.getDirection()) {
             case HORIZONTAL:
                 final int endCol = col + length - 1;
-                for (int c = col; c < endCol; c++)
+                for (int c = col; c <= endCol; c++)
                     coordinates.add(new Coordinate(row, c));
                 break;
             case VERTICAL:
                 final int endRow = row + length - 1;
-                for (int r = row; r < endRow; r++)
+                for (int r = row; r <= endRow; r++)
                     coordinates.add(new Coordinate(r, col));
                 break;
         }

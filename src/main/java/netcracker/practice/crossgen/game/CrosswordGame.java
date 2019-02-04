@@ -8,6 +8,7 @@ import netcracker.practice.crossgen.logic.crossword.Crossword;
 import netcracker.practice.crossgen.logic.generator.Generator;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class CrosswordGame implements Game {
     private Configuration config;
@@ -18,11 +19,13 @@ public class CrosswordGame implements Game {
     private Crossword crossword;
 
     public CrosswordGame() {
+        config = new CrosswordConfiguration();
         state = new InitialState();
-        debug();
+        //setUp();
     }
 
-    private void debug() {
+    /* Initial setup for debug purposes */
+    private void setUp() {
         config = new CrosswordConfiguration();
         ((CrosswordConfiguration) config).setHeight(12);
         ((CrosswordConfiguration) config).setWidth(12);
@@ -96,7 +99,7 @@ public class CrosswordGame implements Game {
 
     @Override
     public boolean isConfigured() {
-        return state.getClass() == ConfiguringState.class;
+        return config.isDone();
     }
 
     @Override
@@ -125,7 +128,7 @@ public class CrosswordGame implements Game {
 
     @Override
     public void setConfiguration(Configuration config) {
-        this.config = config;
+        this.config = Objects.requireNonNull(config);
     }
 
     @Override

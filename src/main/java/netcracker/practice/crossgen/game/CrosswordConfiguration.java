@@ -15,6 +15,11 @@ public class CrosswordConfiguration implements Configuration {
         constraints = "";
     }
 
+    @Override
+    public boolean isDone() {
+        return height > 0 && width > 0 && !clues.equals("");
+    }
+
     public String getAngle() {
         return "straight";
     }
@@ -83,7 +88,8 @@ public class CrosswordConfiguration implements Configuration {
                 );
                 parsedConstraints.add(constraint);
             } catch (Exception e) {
-                throw new ParseException(e);
+                throw new ParseException("Возникла ошибка во время разбора ограничений.\n" +
+                        "Проверьте формат конфигурации.", e);
             }
         }
         return parsedConstraints;

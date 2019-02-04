@@ -3,6 +3,7 @@ package netcracker.practice.crossgen.logic.angle;
 import netcracker.practice.crossgen.Settings;
 import netcracker.practice.crossgen.logic.grid.BaseGrid;
 import netcracker.practice.crossgen.logic.grid.CharGrid;
+import netcracker.practice.crossgen.logic.grid.Coordinate;
 import netcracker.practice.crossgen.logic.grid.MutableGrid;
 import netcracker.practice.crossgen.logic.word.Clue;
 import netcracker.practice.crossgen.logic.word.Direction;
@@ -10,7 +11,9 @@ import netcracker.practice.crossgen.logic.word.GridWord;
 import netcracker.practice.crossgen.logic.word.Word;
 import org.junit.Test;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.logging.Logger;
 
 import static org.junit.Assert.*;
@@ -18,6 +21,20 @@ import static org.junit.Assert.*;
 public class StraightAngleTest {
 
     private final Logger log = Logger.getLogger(StraightAngleTest.class.getName());
+    @Test
+    public void testGetCoordinates() {
+        Angle angle = new StraightAngle();
+        Word word = new GridWord(3, 2, Direction.VERTICAL, 4);
+
+        HashSet<Coordinate> coordinates = new HashSet<>();
+        coordinates.add(new Coordinate(3, 2));
+        coordinates.add(new Coordinate(4, 2));
+        coordinates.add(new Coordinate(5, 2));
+        coordinates.add(new Coordinate(6, 2));
+
+        Set<Coordinate> acquiredCoordinates = angle.getCoordinates(word);
+        assertTrue(acquiredCoordinates.equals(coordinates));
+    }
 
     @Test
     public void testGetIntersectingWordCol() {

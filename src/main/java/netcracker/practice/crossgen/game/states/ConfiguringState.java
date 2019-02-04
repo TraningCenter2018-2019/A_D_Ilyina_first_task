@@ -12,6 +12,8 @@ public class ConfiguringState implements GameState {
     public void doAction(Game game) throws GameException {
         CrosswordConfiguration config = (CrosswordConfiguration) game.getConfiguration();
         try {
+            if (!game.isConfigured())
+                throw new GameException("Кроссворд не был сконфигурирован.");
             BaseGrid grid = new BaseGrid(config.getHeight(), config.getWidth(),
                     config.parseConstraints());
             game.setGenerator(new CanadianCrosswordGenerator(
@@ -19,7 +21,8 @@ public class ConfiguringState implements GameState {
                     grid,
                     config.parseClues()));
         } catch (Exception e) {
-            throw new GameException(e);
+            game.setState(new InitialState());
+            throw new GameException(e.getMessage());
         }
     }
 }

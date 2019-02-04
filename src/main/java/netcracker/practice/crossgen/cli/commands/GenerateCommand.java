@@ -14,10 +14,10 @@ public class GenerateCommand extends AbstractCommand {
     @Override
     public void execute(Game game, GameTerminal terminal) {
         try {
-            if (game.isNew())
+            if (!game.isConfigured())
                 throw new GameException("Кроссворд не был сконфигурирован.");
 
-            if (!game.isConfigured()) {
+            if (game.isPlayed()) {
                 if (!terminal.confirm("Вы действительно хотите прекратить текущее действие?"))
                     return;
                 game.setState(new ConfiguringState());

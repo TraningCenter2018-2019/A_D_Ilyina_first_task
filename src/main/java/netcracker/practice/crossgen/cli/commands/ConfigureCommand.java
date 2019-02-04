@@ -57,7 +57,7 @@ public class ConfigureCommand extends AbstractCommand {
                                 .setDescription("Задайте координаты чёрных клеток\n" +
                                         "на поле в формате \"ряд колонка\". Каждую\n" +
                                         "пару указывайте на новой строке.")
-                                .setValidationPattern(Pattern.compile("([0-9]+ [0-9]+)(\n[0-9]+ [0-9]+)*"),
+                                .setValidationPattern(Pattern.compile("(^$|(([0-9]+ [0-9]+)(\n[0-9]+ [0-9]+)*))"),
                                         "Неверный формат ограничений")
                                 .setTextBoxSize(new TerminalSize(30, 10))
                                 .setInitialContent(config.getConstraints())
