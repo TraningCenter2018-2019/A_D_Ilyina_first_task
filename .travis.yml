@@ -1,0 +1,22 @@
+language: java
+sudo: false
+install: true
+
+addons:
+  sonarcloud:
+    organization: "traningcenter2018-2019"
+    token:
+      secure: "26805db72443041e902983c470e0f90c2aeae219"
+
+jdk:
+  - oraclejdk8
+
+script:
+  # JaCoCo is used to have code coverage, the agent has to be activated
+  - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent package sonar:sonar
+
+cache:
+  directories:
+    - '$HOME/.m2/repository'
+    - '$HOME/.sonar/cache'
+
