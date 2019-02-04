@@ -25,7 +25,7 @@ public class CrosswordGame implements Game {
     }
 
     /* Initial setup for debug purposes */
-    private void setUp() {
+    /*private void setUp() {
         config = new CrosswordConfiguration();
         ((CrosswordConfiguration) config).setHeight(12);
         ((CrosswordConfiguration) config).setWidth(12);
@@ -72,7 +72,7 @@ public class CrosswordGame implements Game {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
+    }*/
 
     @Override
     public Crossword generate() throws GameException {
