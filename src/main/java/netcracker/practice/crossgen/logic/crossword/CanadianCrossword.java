@@ -43,6 +43,7 @@ public class CanadianCrossword extends Crossword {
         return sortedClues;
     }
 
+    /* unused */
     public void setClueNumbers() {
         ClueComparator comparator = new ClueComparator();
         Clue previous = clues.first();
@@ -145,40 +146,37 @@ public class CanadianCrossword extends Crossword {
 
         @Override
         public void deserialize(String filename) throws IOException {
-            Scanner scanner = new Scanner(new FileReader(filename));
-            if (!scanner.hasNextLine()) throw new IOException("File is empty");
+            try (Scanner scanner = new Scanner(new FileReader(filename))) {
+                if (!scanner.hasNextLine()) throw new IOException("File is empty");
 
-            // read clues
-            Matcher m = cluePattern.matcher("");
-            while (scanner.hasNextLine()) {
-                String line = scanner.nextLine();
-                m.reset(line);
-                if (!m.matches())
-                    throw new IOException("Line doesn't match grid clue pattern: \"" + line + "\"");
+                // read clues
+                Matcher m = cluePattern.matcher("");
+                while (scanner.hasNextLine()) {
+                    String line = scanner.nextLine();
+                    m.reset(line);
+                    if (!m.matches())
+                        throw new IOException("Line doesn't match grid clue pattern: \"" + line + "\"");
 
-                Direction dir = Direction.valueOf(m.group(1));
-                int row = Integer.parseInt(m.group(2));
-                int col = Integer.parseInt(m.group(3));
-                Clue clue = new Clue(row, col, dir, m.group(4), m.group(5));
-                clues.add(clue);
+                    Direction dir = Direction.valueOf(m.group(1));
+                    int row = Integer.parseInt(m.group(2));
+                    int col = Integer.parseInt(m.group(3));
+                    Clue clue = new Clue(row, col, dir, m.group(4), m.group(5));
+                    clues.add(clue);
+                }
             }
-
-            scanner.close();
         }
 
         @Override
         public void serialize(String filename) throws IOException {
-            PrintWriter printWriter = new PrintWriter(new FileWriter(filename));
-
-            // save clues
-            for (Clue clue : clues) {
-                printWriter.printf("%s (%d, %d) %s: %s\n",
-                        clue.getDirection().toString(),
-                        clue.getRow(), clue.getCol(),
-                        clue.getString(), clue.getClue());
+            try (PrintWriter printWriter = new PrintWriter(new FileWriter(filename))) {
+                // save clues
+                for (Clue clue : clues) {
+                    printWriter.printf("%s (%d, %d) %s: %s%n",
+                            clue.getDirection().toString(),
+                            clue.getRow(), clue.getCol(),
+                            clue.getString(), clue.getClue());
+                }
             }
-
-            printWriter.close();
         }
     }
 }

@@ -20,17 +20,12 @@ public class CrosswordTerminal extends GameObserver implements GameTerminal {
     private MainWindow mainWindow;
     private CommandDispatcher dispatcher;
 
-    public CrosswordTerminal(Game game, CommandDispatcher dispatcher) {
+    public CrosswordTerminal(Game game, CommandDispatcher dispatcher) throws IOException {
         super(game);
-        try {
-            screen = new VirtualScreen(new DefaultTerminalFactory().createScreen());
-            this.dispatcher = Objects.requireNonNull(dispatcher);
-            gui = new MultiWindowTextGUI(screen, new DefaultWindowManager(), new EmptySpace(TextColor.ANSI.CYAN));
-            mainWindow = new MainWindow("Crossgen v1.0");
-        } catch (IOException e) {
-            // TODO more
-            e.printStackTrace();
-        }
+        screen = new VirtualScreen(new DefaultTerminalFactory().createScreen());
+        this.dispatcher = Objects.requireNonNull(dispatcher);
+        gui = new MultiWindowTextGUI(screen, new DefaultWindowManager(), new EmptySpace(TextColor.ANSI.CYAN));
+        mainWindow = new MainWindow("Crossgen v1.0");
     }
 
     @Override

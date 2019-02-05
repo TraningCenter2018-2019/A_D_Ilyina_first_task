@@ -14,13 +14,16 @@ import org.junit.Test;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.logging.Logger;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 
 import static org.junit.Assert.*;
 
 public class StraightAngleTest {
 
-    private final Logger log = Logger.getLogger(StraightAngleTest.class.getName());
+    private final Logger log = LoggerFactory.getLogger(StraightAngleTest.class.getName());
     @Test
     public void testGetCoordinates() {
         Angle angle = new StraightAngle();
