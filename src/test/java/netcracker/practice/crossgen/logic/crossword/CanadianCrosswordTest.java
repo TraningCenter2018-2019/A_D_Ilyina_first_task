@@ -91,7 +91,8 @@ public class CanadianCrosswordTest
 
     @Test
     public void testToString() {
+        String lineSeparator = System.lineSeparator();
         assertEquals("", emptyCross.toString());
-        assertEquals("aaa\r\nb⬛c\r\n", cross.toString());
+        assertEquals("aaa" + lineSeparator + "b⬛c" + lineSeparator, cross.toString());
     }
 }
